@@ -1,0 +1,30 @@
+{
+  "name": "empty-project-template",
+  "main": "src/App.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "expo": "^30.0.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "axios": "^0.18.0",
+    "native-base": "^2.7.2",
+    "react": "16.4.1",
+    "react-native-camera": "^1.2.0",
+    "react-native-is-iphonex": "^1.0.1",
+    "react-navigation": "^2.11.2",
+    "react-navigation-redux-helpers": "^2.0.5",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "validator": "^10.7.1"
+
+
+  }
+}
+
+ 
