@@ -13,7 +13,9 @@ export default (state = {}, action) => {
           LastName: action.LastName,
           Age: action.Age,
           PhoneNumber:action.PhoneNumber,
-          PicturePath: action.PicturePath
+          WinCount: action.WinCount,
+          LoseCount: action.LoseCount
+
         };
 
       case 'LOGOUT':
