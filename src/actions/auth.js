@@ -5,7 +5,7 @@ export const error = (msg) => ({
     msg
   });
 
-export const login = ({UserName,FirstName,LastName,Age,PhoneNumber,PicturePath,Password,Email,ID,WinCount,LoseCount} = {}) => ({
+export const login = ({UserName,FirstName,LastName,Age,PhoneNumber,PicturePath,Password,Email,ID,WinCount,LoseCount,Token} = {}) => ({
     type: 'LOGIN',
     UserName,
     FirstName,
@@ -17,8 +17,8 @@ export const login = ({UserName,FirstName,LastName,Age,PhoneNumber,PicturePath,P
     Email,
     ID,
     WinCount,
-    LoseCount
-
+    LoseCount,
+    Token
 
   });
 

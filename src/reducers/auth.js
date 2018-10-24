@@ -14,7 +14,8 @@ export default (state = {}, action) => {
           Age: action.Age,
           PhoneNumber:action.PhoneNumber,
           WinCount: action.WinCount,
-          LoseCount: action.LoseCount
+          LoseCount: action.LoseCount,
+          Token: action.Token
 
         };
 

@@ -17,8 +17,9 @@ import {
 import {View} from 'react-native';
 import Expo from "expo";
 import {StatusBar, TouchableOpacity, Image} from "react-native";
-
-import {startLogin} from '../actions/auth'
+import { startUpdateNotification } from '../actions/push_notification';
+import {startLogin} from '../actions/auth';
+import Notification from '../services/push_notifications';
 
 class LogInPage extends Component {
   static navigationOptions = {
@@ -64,7 +65,15 @@ class LogInPage extends Component {
 
     //start login
    await this.props.startLogin(this.state.username, this.state.password);
-   this.props.navigation.navigate('DashPage');
+   const curToken = await Notification();
+   debugger;
+   if(curToken != this.props.userDetails.Token)
+   {
+    await this.props.startUpdateNotification(this.props.userDetails.Email,curToken);
+   }
+
+
+   //this.props.navigation.navigate('DashPage');
 
 
   };
@@ -137,12 +146,15 @@ class LogInPage extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   startLogin: (userName, password) => dispatch(startLogin(userName, password)),
+  startUpdateNotification: (email, Token) => dispatch(startUpdateNotification(email,Token)),
   logout: () => dispatch(logout())
 });
 
 const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.msg,
-  errorMassege: state.auth.msg
+  errorMassege: state.auth.msg,
+  userDetails: state.auth
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogInPage);
