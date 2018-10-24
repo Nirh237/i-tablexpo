@@ -24,7 +24,7 @@ class App extends React.Component {
    
 
     this._notificationSubscription = Notifications.addListener((notification) => {
-  
+  debugger;
       const { data: { text },origin } = notification;
       if (origin === 'received' && text) {
         Alert.alert(

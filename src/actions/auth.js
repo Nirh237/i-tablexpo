@@ -29,7 +29,7 @@ export const startLogin = (userName,password) => {
       return Api.post("Login",{userName,password}).then((Response) => {
 
         const user = JSON.parse(Response.data.d);
-
+debugger;
         if(user != null) {
 
             dispatch(login(user));

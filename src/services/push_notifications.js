@@ -43,7 +43,7 @@ const startSendNotification = (token) => {
       return Api.post('SendPushNotification',{token}).then((Response) => {
 
         const response = JSON.parse(Response.data.d);
-debugger;
+
       }).catch((error) => {
         console.log(error);
       })
