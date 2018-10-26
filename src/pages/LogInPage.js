@@ -95,10 +95,13 @@ class LogInPage extends Component {
        extraHeight={Platform.select({ android: 150 })}
        resetScrollToCoords={{x:0,y:0}}
       >
-      <Content>
+      <Content >
 
-      <View style={{ backgroundColor: '#635DB7', height: 300,justifyContent:'center',alignItems:'center' }}>
-      <H1 > logo here! </H1>
+      <View style={{  height: 300,justifyContent:'center',alignItems:'center' }}>
+      <Image
+      style={{width: 200, height: 200}}
+      source={require('../../assets/logo2.png')}
+       />
       </View>
           <Item floatingLabel  >
             <Label>Username</Label>
