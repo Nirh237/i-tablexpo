@@ -14,12 +14,14 @@ import {
   Label,
   H1
 } from 'native-base';
-import {View} from 'react-native';
+import {View,Platform} from 'react-native';
 import Expo from "expo";
-import {StatusBar, TouchableOpacity, Image} from "react-native";
+import {StatusBar, TouchableOpacity, Image, KeyboardAvoidingView,ScrollView} from "react-native";
 import { startUpdateNotification } from '../actions/push_notification';
 import {startLogin} from '../actions/auth';
 import Notification from '../services/push_notifications';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 class LogInPage extends Component {
   static navigationOptions = {
@@ -83,16 +85,24 @@ class LogInPage extends Component {
       return <Expo.AppLoading/>; //123456
     }
     return (
+
+
       <Container>
+      <KeyboardAwareScrollView
+       enableOnAndroid
+       enableAutomaticScroll
+       keyboardOpeningTime={0}
+       extraHeight={Platform.select({ android: 150 })}
+       resetScrollToCoords={{x:0,y:0}}
+      >
+      <Content >
 
-      <H1 style={{
-        alignSelf:'center',
-
-
-      }}
-      > logo here! </H1>
-
-        <Content style={{marginTop:240}}>
+      <View style={{  height: 300,justifyContent:'center',alignItems:'center' }}>
+      <Image
+      style={{width: 200, height: 200}}
+      source={require('../../assets/logo2.png')}
+       />
+      </View>
           <Item floatingLabel  >
             <Label>Username</Label>
             <Input
@@ -105,7 +115,6 @@ class LogInPage extends Component {
             <Input
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}/>
-
           </Item>
 
 
@@ -113,16 +122,8 @@ class LogInPage extends Component {
           <Text>Login</Text>
           </Button>
 
-          <Body
-          style={{
-            marginTop: 20,
-            marginBottom: 10
-          }}
-          >
-
-
+          <Body>
             <TouchableOpacity
-
               onPress={() => {
               this
                 .props
@@ -133,12 +134,10 @@ class LogInPage extends Component {
                 Registration
               </Text>
             </TouchableOpacity>
-
           </Body>
 
-
-
         </Content>
+        </KeyboardAwareScrollView>
       </Container>
     );
   }

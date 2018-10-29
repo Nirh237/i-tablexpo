@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Container, Header, Content, Item, Input, Icon , Button,Text,Toast,Spinner   } from 'native-base';
-import {View,TouchableOpacity} from 'react-native';
+import {View,TouchableOpacity,Platform} from 'react-native';
 import Expo from "expo";
 import { StatusBar } from "react-native";
 // import Api from '../../server/Api';
 import {startSignIn} from '../actions/auth';
 import validator from 'validator';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
   class SignInPage extends Component {
 
@@ -25,14 +26,14 @@ import validator from 'validator';
         super(props);
         this.state = {
           loading: true,
-          username:"defult user",
-          firstname:"defult fname",
-          lastname:"defult lname",
-          age:0,
-          telephone:"0545555555",
-          password:"1111",
+          username:"",
+          firstname:"",
+          lastname:"",
+          age:"",
+          telephone:"",
+          password:"",
           confirmPass:'',
-          email:"gooojkjj@gmail.com",
+          email:"",
           error:false
 
          };
@@ -107,13 +108,20 @@ import validator from 'validator';
     return (
       <Container>
 
+      <KeyboardAwareScrollView
+      enableOnAndroid
+      enableAutomaticScroll
+      keyboardOpeningTime={0}
+      extraHeight={Platform.select({ android: 100 })}
+      resetScrollToCoords={{x:0,y:0}}
+     >
         <Content padder>
 
-        <Item  success = {this.state.error ? false : true} error = {this.state.error ? true : false}>
+        <Item  success = {this.state.error ? false : true} error = {this.state.error || this.state.username === '' ? true : false}>
             <Input placeholder='User Name'
              onChangeText={(username) => this.setState({username})}
             value={this.state.username} />
-            <Icon name={this.state.error ?  'close-circle' : 'checkmark-circle' } />
+            <Icon name={this.state.error || this.state.username === '' ?  'close-circle' : 'checkmark-circle' } />
           </Item>
 
           <Item success = {this.state.firstname.length > 2 ? true : false} error = {this.state.firstname.length <= 2 ? true : false}>
@@ -153,20 +161,20 @@ import validator from 'validator';
             <Icon name= {this.state.password.match(/(?=.*\d)(?=.*\W+)(?=.*[a-z])(?=.*[A-Z]).{7,12}/) ? 'checkmark-circle' : 'close-circle' } />
           </Item>
 
-          <Item success = {validator.equals(this.state.confirmPass,this.state.password)} error = {!validator.equals(this.state.confirmPass,this.state.password)}>
+          <Item success = {validator.equals(this.state.confirmPass,this.state.password)  } error = {!validator.equals(this.state.confirmPass,this.state.password) ||  this.state.confirmPass === ''}>
             <Input placeholder='Confirm Password'
             onChangeText={(confirmPass) => this.setState({confirmPass})}
             value={this.state.confirmPass}
             />
-            <Icon name={validator.equals(this.state.confirmPass,this.state.password) ? 'checkmark-circle' : 'close-circle' } />
+            <Icon name={validator.equals(this.state.confirmPass,this.state.password) && this.state.confirmPass !== '' ? 'checkmark-circle' : 'close-circle' } />
           </Item>
 
-          <Item  success = {this.state.error ? false : true} error = {this.state.error ? true : false}>
+          <Item  success = {this.state.error ? false : true} error = {this.state.error || this.state.email === '' || !validator.isEmail(this.state.email) ? true : false}>
           <Input placeholder='Email'
            onChangeText={(email) => this.setState({email})}
            value={this.state.email} />
 
-          <Icon name={this.state.error ?  'close-circle' : 'checkmark-circle' } />
+          <Icon name={this.state.error || this.state.email === '' || !validator.isEmail(this.state.email) ?  'close-circle' : 'checkmark-circle' } />
         </Item>
 
 
@@ -175,10 +183,8 @@ import validator from 'validator';
             <Text>NEXT</Text>
           </Button>
 
-
-
-
         </Content>
+        </KeyboardAwareScrollView>
       </Container>
     );
   }

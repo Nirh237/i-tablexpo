@@ -10,25 +10,26 @@ import DashboardPage from './pages/DashboardPage';
 import cuurentPictureScreen from './pages/Camera/currentPictureScreen';
 import configureStore from './store/configureStore';
 import { Provider } from "react-redux";
+import registerForNotification from './services/push_notifications';
 
 
 
 const store = configureStore();
 
 class App extends React.Component {
-  // componentDidMount() {
-  //   this._notificationSubscription = Notifications.addListener((notification) => {
-  //     debugger;
-  //     const { data: { text },origin } = notification;
-  //     if (origin === 'received' && text) {
-  //       Alert.alert(
-  //         'New Push Notification',
-  //         text,
-  //         [{ text: 'Ok.' }]
-  //       )
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    registerForNotification();
+    this._notificationSubscription = Notifications.addListener((notification) => {
+      const { data: { text },origin } = notification;
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New Push Notification',
+          text,
+          [{ text: 'Ok.' }]
+        )
+      }
+    });
+  }
 
   render() {
     return (
