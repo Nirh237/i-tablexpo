@@ -118,23 +118,9 @@ export default class CameraScreen extends React.Component {
           <Camera ref={ref => {
             this.camera = ref;
           }} style={{ flex: 1 }} type={this.state.type} >
-          <View style={{
-            flex: 1, padding: 50,
-            alignItems: 'center',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }}>
-            <Text style={{ fontSize: 20 }}>Reload at {new Date().toLocaleTimeString()}</Text>
-            <Button
-              onPress={this.btnPic}
-              title="btn Pic From OutSide"
-              style={{width:200 }}
-            />
-            <Image
-              style={{ width: 200, height: 200, borderWidth: 1, borderRadius: 100}}
-              source={{ uri: this.state.picUri }}
-            />
-          </View>
+
+          </Camera>
+         
           <Footer>
             <View
               style={{
@@ -226,9 +212,28 @@ export default class CameraScreen extends React.Component {
          
           
           
-          </Camera>
+          
         </View>
       );
     }
   }
 }
+
+
+// // <View style={{
+//   flex: 1, padding: 50,
+//   alignItems: 'center',
+//   flexDirection: 'column',
+//   justifyContent: 'space-between'
+// }}>
+//   <Text style={{ fontSize: 20 }}>Reload at {new Date().toLocaleTimeString()}</Text>
+//   <Button
+//     onPress={this.btnPic}
+//     title="btn Pic From OutSide"
+//     style={{width:200 }}
+//   />
+//   <Image
+//     style={{ width: 200, height: 200, borderWidth: 1, borderRadius: 100}}
+//     source={{ uri: this.state.picUri }}
+//   />
+// </View>

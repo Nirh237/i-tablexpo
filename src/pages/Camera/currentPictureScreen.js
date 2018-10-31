@@ -90,7 +90,7 @@ export default class cuurentPictureScreen extends React.Component {
         justifyContent: 'center',
         alignItems: 'center', }}>
         <Body>
-        <View >
+        <View style ={{flex:1,justifyContent:'center',alignItems:'center'}} >
 
             <Image
               style={{ width: 300, height: 300, borderWidth: 1, borderRadius: 100}}
@@ -123,15 +123,7 @@ export default class cuurentPictureScreen extends React.Component {
             </TouchableOpacity>
 
 
-            <Right>
-            <TouchableOpacity>
-              <Image
-                style={{ width: 50, height: 50, borderRadius: 25, borderWidth: 1 }}
-                source={{ uri: this.state.picUri }}
-              />
-              </TouchableOpacity>
-              </Right>
-
+            
             </View>
             </Footer>
         </View>
