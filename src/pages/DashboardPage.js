@@ -10,7 +10,8 @@ import {
   Button,
   Text,
   center,
-  Body
+  Body,
+  StyleSheet
 } from 'native-base';
 import {View} from 'react-native';
 import Expo from "expo";
@@ -61,11 +62,54 @@ class DashboardPage extends Component {
     }
     return (
       <Container>
+      <Content style={styles.Rectangle}>
+
+          <Content >
+            START-DATE
+        </Content>
+          <Content >
+            END-DATE
+        </Content>
+          <Content ></Content>
+
+          <Content > </Content>
+          <Content >  </Content>
+          </Content>
+      <Button full style={styles.button}>
+      <Text>CREATE NEW GAME</Text>
+    </Button>
+    <Button full style={styles.button}>
+    <Text>JOIN GAME</Text>
+  </Button>
+  <Button full style={styles.button} >
+  <Text>HISTORY GAMES</Text>
+ </Button>
 
       </Container>
     );
   }
 }
+
+const styles = {
+  button: {
+    borderWidth: 1,
+        borderColor:"black",
+        borderTopWidth: 0,
+  },
+
+  Rectangle: {
+    width: 375,
+    height: 156,
+    backgroundColor: '#ffffff',
+    position: 'relative',
+    top: 19,
+  },
+
+
+
+
+
+};
 
 const mapDispatchToProps = (dispatch) => ({
   startLogin: (userName, password) => dispatch(startLogin(userName, password)),

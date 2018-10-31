@@ -6,10 +6,10 @@ export const updateToken = (Token) => ({
 });
 
 export const startUpdateNotification = (email,Token) => {
-    debugger;
+
     return (dispatch) => {
       return Api.post("UpdateNotificationKey",{email,Token}).then(() => {
-        debugger;
+  
         dispatch(updateToken(Token))
       }).catch((error) => {
         console.log(error);
