@@ -62,19 +62,7 @@ class DashboardPage extends Component {
     }
     return (
       <Container>
-      <Content style={styles.Rectangle}>
-
-          <Content >
-            START-DATE
-        </Content>
-          <Content >
-            END-DATE
-        </Content>
-          <Content ></Content>
-
-          <Content > </Content>
-          <Content >  </Content>
-          </Content>
+     
       <Button full style={styles.button}>
       <Text>CREATE NEW GAME</Text>
     </Button>
@@ -95,15 +83,8 @@ const styles = {
     borderWidth: 1,
         borderColor:"black",
         borderTopWidth: 0,
-  },
+  }
 
-  Rectangle: {
-    width: 375,
-    height: 156,
-    backgroundColor: '#ffffff',
-    position: 'relative',
-    top: 19,
-  },
 
 
 
