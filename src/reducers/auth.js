@@ -12,6 +12,7 @@ export default (state = {}, action) => {
           FirstName: action.FirstName,
           LastName: action.LastName,
           Age: action.Age,
+          PicturePath: action.PicturePath,
           PhoneNumber:action.PhoneNumber,
           WinCount: action.WinCount,
           LoseCount: action.LoseCount,

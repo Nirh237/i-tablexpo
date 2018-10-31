@@ -68,14 +68,14 @@ class LogInPage extends Component {
     //start login
    await this.props.startLogin(this.state.username, this.state.password);
    const curToken = await Notification();
-   debugger;
+
    if(curToken != this.props.userDetails.Token)
    {
     await this.props.startUpdateNotification(this.props.userDetails.Email,curToken);
    }
 
 
-   //this.props.navigation.navigate('DashPage');
+   this.props.navigation.navigate('DashPage');
 
 
   };
