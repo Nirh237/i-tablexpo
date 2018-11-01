@@ -14,21 +14,30 @@ import { connect } from 'react-redux';
 
         this.state = {
          picUri:props.PicturePath ? props.PicturePath : 'https://cdn1.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/gen' +
-         'der-male2-512.png'
+         'der-male2-512.png',
+         firstName:props.FirstName ? props.FirstName: 'User'
         };
     }
     render() {
         return (
+          <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+          <View style={{justifyContent:'space-around',right:15}}>
+          <Text style={{color:'white'}}>{this.state.firstName}</Text>
+          </View>
+          <View>
           <Image
             source={{uri:this.state.picUri}}
             style={{ width: 44, height: 44, borderRadius: 25, borderWidth: 1 }}
           />
+          </View>
+          </View>
         );
       }
   }
 
   const mapStateToProps = (state) => ({
-    PicturePath: state.auth.PicturePath
+    PicturePath: state.auth.PicturePath,
+    FirstName: state.auth.FirstName
   });
 
   export default connect(mapStateToProps)(LogoTitle)
