@@ -11,6 +11,7 @@ import cuurentPictureScreen from './pages/Camera/currentPictureScreen';
 import configureStore from './store/configureStore';
 import { Provider } from "react-redux";
 import registerForNotification from './services/push_notifications';
+import CreateNewGamePage from './pages/CreateNewGamePage';
 
 
 
@@ -48,7 +49,9 @@ export const AppNavigator = createStackNavigator(
     DashPage: { screen:DashboardPage},
     SignInPage: { screen: SignInPage },
     Camera:{screen:CameraScreen},
-    Picture:{screen:cuurentPictureScreen}
+    Picture:{screen:cuurentPictureScreen},
+    CreateNewGame:{screen:CreateNewGamePage}
+
 
   },
   {

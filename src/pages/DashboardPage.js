@@ -16,7 +16,9 @@ import {
 } from 'native-base';
 import { View } from 'react-native';
 import Expo from "expo";
-import { StatusBar, TouchableOpacity, Image } from "react-native";
+import { Modal,StatusBar, TouchableOpacity, Image } from "react-native";
+import JoinGameModal from '../components/JoinGameModal';
+import CreateNewGameModal from '../components/CreateNewGameModal';
 
 import LogoTitle from '../components/LogoHeader';
 
@@ -44,6 +46,9 @@ class DashboardPage extends Component {
     super(props);
     this.state = {
       loading: true,
+      loseCount: props.LoseCount,
+      winCount: props.WinCount,
+      modalVisible: false,
 
     };
   }
@@ -55,7 +60,12 @@ class DashboardPage extends Component {
     this.setState({ loading: false });
   }
 
+  openModal = () => {
 
+    this.setState(() => ({
+      modalVisible: visible
+    }))
+  }
 
 
   render() {
@@ -66,11 +76,11 @@ class DashboardPage extends Component {
       <Container style={{flex:1, justifyContent: 'space-between'}}>  
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
           <Card style={styles.card}>
-            <Text> Win Count</Text>
+            <Text>Wine Count {this.state.winCount}</Text>
           </Card>
        
           <Card style={styles.card}>
-            <Text> Lose Count</Text>
+            <Text> Lose Count {this.state.loseCount}</Text>
           </Card>
         </View>
 
@@ -88,12 +98,18 @@ class DashboardPage extends Component {
 
 
         <View style={{ flex: 1, justifyContent:'flex-end'}}>
-          <Button full style={styles.button}>
-            <Text>CREATE NEW GAME</Text>
-          </Button>
-          <Button full style={styles.button}>
-            <Text>JOIN GAME</Text>
-          </Button>
+        <CreateNewGameModal 
+        modalVisible={this.state.modalVisible}
+          closeModal={this.closeModal} >
+          </CreateNewGameModal>
+
+          <JoinGameModal 
+          modalVisible={this.state.modalVisible}
+            closeModal={this.closeModal} >
+            </JoinGameModal>
+      
+         
+
           <Button full style={styles.button} >
             <Text>GAMES HISTORY</Text>
           </Button>
@@ -136,7 +152,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.msg,
-  errorMassege: state.auth.msg
+  errorMassege: state.auth.msg,
+  LoseCount: state.auth.LoseCount,
+  WinCount: state.auth.WinCount
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
