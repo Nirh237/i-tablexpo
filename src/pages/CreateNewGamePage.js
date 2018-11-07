@@ -128,7 +128,7 @@ const styles = {
         flex: 1,
         alignItems: 'center',
         flexDirection: "column",
-        backgroundColor: '#0e76ec',
+        backgroundColor: '#0279fe',
     },
 
     input: {
@@ -137,6 +137,6 @@ const styles = {
         width: 300,
         borderColor: 'gray',
         borderWidth: 1,
-        margin: 10,
+        margin: 15,
     }
 };

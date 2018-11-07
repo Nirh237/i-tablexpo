@@ -116,7 +116,7 @@ const styles = {
         flexDirection: "column",
         marginTop: 250,
         marginBottom: 220,
-        backgroundColor: '#0e76ec',
+        backgroundColor: '#0279fe',
         borderColor: 'black',
         borderStyle: 'solid',
         borderWidth: 5,
