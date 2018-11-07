@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Modal, TouchableHighlight, View, Alert, TouchableOpacity } from 'react-native';
 import {
     Container,
@@ -19,115 +19,113 @@ import {
 import LogoTitle from '../components/LogoHeader';
 
 
- class CreateNewGameModal extends Component {
+class CreateNewGameModal extends Component {
     static navigationOptions = {
         title: 'Dash',
         headerRight: (
-          <LogoTitle
-          />
-          
+            <LogoTitle
+            />
+
         ),
         headerStyle: {
-          backgroundColor: '#364051',
+            backgroundColor: '#364051',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
-          fontWeight: 'bold',
-         
+            fontWeight: 'bold',
+
         }
-      };
+    };
     constructor(props) {
         super(props);
-    
-    this.state = {
-        modalVisible: false,
-        gameid: ""
-    };
-}
 
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
+        this.state = {
+            modalVisible: false,
+            tableid: ""
+        };
     }
 
-    handleGameIdChange = (e) => {
+    setModalVisible(visible) {
+        this.setState({ modalVisible: false });
+    }
 
-        this.setState(() => ({ gameid: e.target.value }));
+    handleTableIdChange = (e) => {
+
+        this.setState(() => ({ tableid: e.target.value }));
+    }
+
+    closeModal = () => {
+        this.props.closeModal();
     }
 
 
     render() {
         return (
-            <View style={{ borderColor: 'red', borderWidth: 1, backgroundColor: '#1c7dec', alignItems: 'center' }}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                    }}>
-                        <Form style={styles.form}>
-                        <Text style={{color: 'black', fontSize: 25,margin:10}}>TABLE ID:</Text>
-                            <Input
-                                type="text"
-                                placeholder="Description"
-                                autoFocus
-                                style={styles.input}
-                                onChangeText={(description) => this.setState({ description })}
-                                value={this.state.description} />
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.props.createGamemodalVisible}
+                onRequestClose=
+                {this.props.closeModal}
+            >
+                <Form style={styles.form}>
+                    <Text style={{ color: 'black', fontSize: 25, margin: 10 }}>ENTER YOUR TABLE ID:</Text>
+                    <Input
+                        type="text"
+                        autoFocus
+                        style={styles.input}
+                        onChangeText={(tableid) => this.setState({ tableid })}
+                        value={this.state.tableid} />
 
-                            <Button full style={{ margin: 10 }}  onPress={() => {
-                                this
-                                  .props
-                                  .navigation
-                                  .navigate('CreateNewGame');
-                              }}>
-                                <Text>NEXT</Text>
-                            </Button>
-                        </Form>
-                </Modal>
+                    <Button full style={{ margin: 10, backgroundColor: 'black' }} onPress={() => {
+                        this.props.closeModal('CreateGame');
 
-                <TouchableOpacity
-                    onPress={() => {
-                        this.setModalVisible(true);
+
+
+
                     }}>
-                    <Text style={{ color: 'white', fontSize: 25 }}>CREATE NEW GAME</Text>
-                </TouchableOpacity>
-            </View>
+                        <Text>NEXT</Text>
+                    </Button>
+                </Form>
+            </Modal>
+
+
         );
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
     startLogin: (userName, password) => dispatch(startLogin(userName, password)),
-    startUpdateNotification: (email, Token) => dispatch(startUpdateNotification(email,Token)),
+    startUpdateNotification: (email, Token) => dispatch(startUpdateNotification(email, Token)),
     logout: () => dispatch(logout())
-  });
-  
-  const mapStateToProps = (state) => ({
+});
+
+const mapStateToProps = (state) => ({
     isAuthenticated: !!state.auth.msg,
     errorMassege: state.auth.msg,
     userDetails: state.auth
-  
-  });
+
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewGameModal);
 
 const styles = {
     form: {
-        flex:1,
-     alignItems: 'center',
+        flex: 1,
+        alignItems: 'center',
         flexDirection: "column",
-        marginTop: 150,
-        marginBottom: 200,
-        backgroundColor: 'white',
-        borderColor:'black',
+        marginTop: 250,
+        marginBottom: 220,
+        backgroundColor: '#0e76ec',
+        borderColor: 'black',
         borderStyle: 'solid',
         borderWidth: 5,
-        
+        borderRadius: 10
+
     },
 
     input: {
-        backgroundColor:'yellow',
+        backgroundColor: 'white',
         height: 50,
         width: 300,
         borderColor: 'gray',

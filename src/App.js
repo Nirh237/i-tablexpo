@@ -1,8 +1,8 @@
-import Expo, {Notifications} from 'expo';
+import Expo, { Notifications } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import {Container,Root} from 'native-base';
+import { Container, Root } from 'native-base';
 import SignInPage from './pages/SignInPage';
 import LogInPage from './pages/LogInPage';
 import CameraScreen from './pages/Camera/Camera';
@@ -12,6 +12,7 @@ import configureStore from './store/configureStore';
 import { Provider } from "react-redux";
 import registerForNotification from './services/push_notifications';
 import CreateNewGamePage from './pages/CreateNewGamePage';
+import CreateNewGameModal from './components/CreateNewGameModal';
 
 
 
@@ -21,7 +22,7 @@ class App extends React.Component {
   componentDidMount() {
     registerForNotification();
     this._notificationSubscription = Notifications.addListener((notification) => {
-      const { data: { text },origin } = notification;
+      const { data: { text }, origin } = notification;
       if (origin === 'received' && text) {
         Alert.alert(
           'New Push Notification',
@@ -34,28 +35,28 @@ class App extends React.Component {
 
   render() {
     return (
-              <Provider store={store}>
-              <Root>
-              <AppNavigator  />
-              </Root>
-              </Provider>
-            );
+      <Provider store={store}>
+        <Root>
+          <AppNavigator />
+        </Root>
+      </Provider>
+    );
   }
 }
 
 export const AppNavigator = createStackNavigator(
   {
     LogInPage: { screen: LogInPage },
-    DashPage: { screen:DashboardPage},
+    DashPage: { screen: DashboardPage },
     SignInPage: { screen: SignInPage },
-    Camera:{screen:CameraScreen},
-    Picture:{screen:cuurentPictureScreen},
-    CreateNewGame:{screen:CreateNewGamePage}
+    Camera: { screen: CameraScreen },
+    Picture: { screen: cuurentPictureScreen },
+    CreateNewGame: { screen: CreateNewGamePage }
 
 
   },
   {
-    initialRouteName: 'LogInPage',
+    initialRouteName: 'DashPage',
   }
 );
 

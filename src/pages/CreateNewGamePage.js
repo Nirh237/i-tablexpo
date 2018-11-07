@@ -39,14 +39,11 @@ export default class CreateNewGamePage extends Component {
         super(props);
 
         this.state = {
-            modalVisible: false,
             gameid: ""
         };
     }
 
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
-    }
+
 
     handleGameIdChange = (e) => {
 
@@ -58,28 +55,28 @@ export default class CreateNewGamePage extends Component {
             <Form style={styles.form}>
                 <Input
                     type="text"
-                    placeholder="Description"
+                    placeholder="Players Count"
                     autoFocus
                     style={styles.input}
                     onChangeText={(description) => this.setState({ description })}
                     value={this.state.description} />
                 <Input
                     type="text"
-                    placeholder="Amount"
+                    placeholder="Game Type"
                     autoFocus
                     style={styles.input}
                     onChangeText={(amount) => this.setState({ amount })}
                     value={this.state.amount} />
                 <Input
                     type="text"
-                    placeholder="Date"
+                    placeholder="Total Chips Count"
                     autoFocus
                     style={styles.input}
                     onChangeText={(expense) => this.setState({ expense })}
                     value={this.state.expense} />
                 <Input
                     type="text"
-                    placeholder="Note"
+                    placeholder="Chip Type"
                     autoFocus
                     style={styles.input}
                     onChangeText={(note) => this.setState({ note })}
@@ -87,7 +84,7 @@ export default class CreateNewGamePage extends Component {
 
                 <Input
                     type="text"
-                    placeholder="Note"
+                    placeholder="Value"
                     autoFocus
                     style={styles.input}
                     onChangeText={(note) => this.setState({ note })}
@@ -95,7 +92,7 @@ export default class CreateNewGamePage extends Component {
 
                 <Input
                     type="text"
-                    placeholder="Note"
+                    placeholder="Big Blind"
                     autoFocus
                     style={styles.input}
                     onChangeText={(note) => this.setState({ note })}
@@ -103,15 +100,23 @@ export default class CreateNewGamePage extends Component {
 
                 <Input
                     type="text"
-                    placeholder="Note"
+                    placeholder="Small Blind"
+                    autoFocus
+                    style={styles.input}
+                    onChangeText={(note) => this.setState({ note })}
+                    value={this.state.note} />
+
+                <Input
+                    type="text"
+                    placeholder="Blind Time"
                     autoFocus
                     style={styles.input}
                     onChangeText={(note) => this.setState({ note })}
                     value={this.state.note} />
 
 
-                <Button full style={{ margin: 10 }} onPress={this.onSubmit}>
-                    <Text>DONE</Text>
+                <Button full style={{ margin: 10, backgroundColor: 'black' }} onPress={this.onSubmit}>
+                    <Text>CREATE GAME</Text>
                 </Button>
             </Form>
         );
@@ -123,11 +128,11 @@ const styles = {
         flex: 1,
         alignItems: 'center',
         flexDirection: "column",
-        backgroundColor: 'white',
+        backgroundColor: '#0e76ec',
     },
 
     input: {
-        backgroundColor: 'yellow',
+        backgroundColor: 'white',
         height: 10,
         width: 300,
         borderColor: 'gray',

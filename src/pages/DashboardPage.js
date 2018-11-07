@@ -16,7 +16,7 @@ import {
 } from 'native-base';
 import { View } from 'react-native';
 import Expo from "expo";
-import { Modal,StatusBar, TouchableOpacity, Image } from "react-native";
+import { Modal, StatusBar, TouchableOpacity, Image } from "react-native";
 import JoinGameModal from '../components/JoinGameModal';
 import CreateNewGameModal from '../components/CreateNewGameModal';
 
@@ -30,7 +30,7 @@ class DashboardPage extends Component {
     headerRight: (
       <LogoTitle
       />
-      
+
     ),
     headerStyle: {
       backgroundColor: '#364051',
@@ -38,7 +38,7 @@ class DashboardPage extends Component {
     headerTintColor: '#fff',
     headerTitleStyle: {
       fontWeight: 'bold',
-     
+
     }
   };
 
@@ -48,7 +48,9 @@ class DashboardPage extends Component {
       loading: true,
       loseCount: props.LoseCount,
       winCount: props.WinCount,
-      modalVisible: false,
+      createGamemodalVisible: false,
+      joinGamemodalVisible: false,
+      CloseModal: true
 
     };
   }
@@ -60,32 +62,60 @@ class DashboardPage extends Component {
     this.setState({ loading: false });
   }
 
-  openModal = () => {
+  openModal = (modalName) => {
+    if (modalName === 'CreateGame') {
+      this.setState(() => ({
+        createGamemodalVisible: true
+      }))
+    } else {
+      this.setState(() => ({
+        joinGamemodalVisible: true
+      }))
 
-    this.setState(() => ({
-      modalVisible: visible
-    }))
+    }
+
+  }
+
+  closeModal = (closeModalName) => {
+    if (closeModalName === 'CreateGame') {
+      this.setState(() => ({
+        createGamemodalVisible: false
+
+      }));
+      this
+        .props
+        .navigation
+        .navigate('CreateNewGame');
+
+    } else {
+      this.setState(() => ({
+        joinGamemodalVisible: false
+
+      }));
+    }
+
   }
 
 
   render() {
+
     if (this.state.loading) {
       return <Expo.AppLoading />; //123456
     }
     return (
-      <Container style={{flex:1, justifyContent: 'space-between'}}>  
+      <Container style={{ flex: 1, justifyContent: 'space-between' }}>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
           <Card style={styles.card}>
             <Text>Wine Count {this.state.winCount}</Text>
           </Card>
-       
+
           <Card style={styles.card}>
             <Text> Lose Count {this.state.loseCount}</Text>
           </Card>
         </View>
 
         <Card style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-          <View style={{ flex: 0.1, flexDirection: 'column'}}>
+          <View style={{ flex: 0.1, flexDirection: 'column' }}>
             <Text style={{ fontWeight: 'bold' }}>Summery</Text>
             <Text>20,000$</Text>
           </View>
@@ -97,26 +127,33 @@ class DashboardPage extends Component {
         </Card>
 
 
-        <View style={{ flex: 1, justifyContent:'flex-end'}}>
-        <CreateNewGameModal 
-        modalVisible={this.state.modalVisible}
-          closeModal={this.closeModal} >
-          </CreateNewGameModal>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <Button full style={styles.button} onPress={() => { this.openModal('CreateGame') }} >
+            <Text>CREATE NEW GAME</Text>
+          </Button>
 
-          <JoinGameModal 
-          modalVisible={this.state.modalVisible}
+          <CreateNewGameModal
+            createGamemodalVisible={this.state.createGamemodalVisible}
+            closeModal={this.closeModal} />
+
+          <Button full style={styles.button} onPress={() => { this.openModal() }} >
+            <Text>JOIN GAME</Text>
+          </Button>
+
+          <JoinGameModal
+            joinGamemodalVisible={this.state.joinGamemodalVisible}
             closeModal={this.closeModal} >
-            </JoinGameModal>
-      
-         
+          </JoinGameModal>
 
-          <Button full style={styles.button} >
+
+
+          <Button full style={styles.button} onPress={() => { this.openModal() }} >
             <Text>GAMES HISTORY</Text>
           </Button>
         </View>
 
-    
-      </Container>
+
+      </Container >
     );
   }
 }
