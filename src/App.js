@@ -56,7 +56,7 @@ export const AppNavigator = createStackNavigator(
 
   },
   {
-    initialRouteName: 'DashPage',
+    initialRouteName: 'LogInPage',
   }
 );
 
