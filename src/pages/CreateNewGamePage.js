@@ -13,9 +13,11 @@ import {
     center,
     Body,
     Label,
-    H1
+    H1,
+    Picker
 } from 'native-base';
 import LogoTitle from '../components/LogoHeader';
+import GameType from '../types/GameType';
 
 
 export default class CreateNewGamePage extends Component {
@@ -60,6 +62,20 @@ export default class CreateNewGamePage extends Component {
                     style={styles.input}
                     onChangeText={(description) => this.setState({ description })}
                     value={this.state.description} />
+                    <Item picker>
+                    <Picker
+                        mode="dropdown"
+                        iosIcon={<Icon name="ios-arrow-down-outline" />}
+                        style={{ width: undefined }}
+                        placeholder="Game Type"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#007aff"
+                        selectedValue={this.state.selected2}
+                        onValueChange={this.onValueChange2.bind(this)}
+                    >
+                        <Picker.Item label="CASH" value=0 />
+                        <Picker.Item label="TOURNAMENT" value=1 />
+                    </Picker>
                 <Input
                     type="text"
                     placeholder="Game Type"
