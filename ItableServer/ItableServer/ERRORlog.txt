@@ -1,0 +1,8 @@
+class:DBService , func:InsertUser date: 22/08/2018 Procedure or function 'RegistrationProc' expects parameter '@User_name', which was not supplied.class:DBService , func:InsertUser date: 22/08/2018 Procedure or function RegistrationProc has too many arguments specified.class:DBService , func:InsertUser date: 22/08/2018 Procedure or function RegistrationProc has too many arguments specified.class:DBService , func:InsertUser date: 22/08/2018 Procedure or function RegistrationProc has too many arguments specified.class:DBService , func:InsertUser date: 22/08/2018 Procedure or function RegistrationProc has too many arguments specified.class:DBService , func:InsertUser date: 22/08/2018 Procedure or function 'RegistrationProc' expects parameter '@PictureName', which was not supplied.class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 Incorrect syntax near ':'.
+class:DBService , func:InsertUser date: 27/11/2018 המרת ערך הפרמטר מ- String ל- Int32 נכשלה.

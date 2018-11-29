@@ -1,0 +1,6 @@
+C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.csproj.CoreCompileInputs.cache
+C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\bin\Debug\DALProj.dll
+C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\bin\Debug\DALProj.pdb
+C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.dll
+C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.pdb
+C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.csprojResolveAssemblyReference.cache
