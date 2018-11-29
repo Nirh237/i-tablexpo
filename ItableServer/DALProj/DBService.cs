@@ -57,7 +57,7 @@ namespace DALProj
                 com.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
 
 
-
+               // testc;
 
 
 
