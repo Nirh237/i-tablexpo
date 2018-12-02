@@ -73,6 +73,7 @@ namespace BALProj
             DBService.UpdateNotificationKey(email, Token);
         }
 
+        //שליחת הזמנה למשחק הכוללת הודעת פוש המפנה לעמוד "אשר/בטל הזמנה" 
         public static void SendInvitation(string token, string title, string body,int gameID)
         {
             var objectToSend = new
@@ -81,7 +82,7 @@ namespace BALProj
                 title = title,
                 body = body,
                 badge = 3,
-                data = new { gameID }
+                data = new { gameID } //שליחת מספר משחק ע"מ להכניס את פרטי השחקן למשחק המתאים כאשר הוא מאשר את ההזמנה
             };
 
             string postData = new JavaScriptSerializer().Serialize(objectToSend);

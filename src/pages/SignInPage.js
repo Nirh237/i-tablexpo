@@ -155,7 +155,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
           <Item success = {validator.matches(this.state.password,/(?=.*\d)(?=.*\W+)(?=.*[a-z])(?=.*[A-Z]).{7,12}/)} error = {!this.state.password.match(/(?=.*\d)(?=.*\W+)(?=.*[a-z])(?=.*[A-Z]).{7,12}/)}>
-            <Input placeholder='Password'
+            <Input secureTextEntry={true} placeholder='Password'
              onChangeText={(password) => this.setState({password})}
              value={this.state.password} />
             <Icon name= {this.state.password.match(/(?=.*\d)(?=.*\W+)(?=.*[a-z])(?=.*[A-Z]).{7,12}/) ? 'checkmark-circle' : 'close-circle' } />

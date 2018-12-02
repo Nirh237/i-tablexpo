@@ -20,7 +20,8 @@ import { StatusBar, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView } 
 import { startUpdateNotification } from '../actions/push_notification';
 import { startLogin } from '../actions/auth';
 import Notification from '../services/push_notifications';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 
 class LogInPage extends Component {
@@ -72,9 +73,14 @@ class LogInPage extends Component {
     if (curToken != this.props.userDetails.Token) {
       await this.props.startUpdateNotification(this.props.userDetails.Email, curToken);
     }
-
-
+    
+    debugger;
+    if(this.props.errorMassege === undefined)
+    {
     this.props.navigation.navigate('DashPage');
+    }else{
+      this.props.logout();
+    }
 
 
   };
