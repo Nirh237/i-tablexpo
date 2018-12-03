@@ -6,8 +6,6 @@ import { StatusBar, TouchableOpacity,Image } from "react-native";
 import { connect } from 'react-redux';
 
 
-
-
  class LogoTitle extends React.Component {
     constructor(props) {
         super(props);
@@ -20,11 +18,11 @@ import { connect } from 'react-redux';
     }
     render() {
         return (
-          <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-          <View style={{justifyContent:'space-around',right:15}}>
+          <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+          <View style={{justifyContent:'space-around', marginRight:15}}>
           <Text style={{color:'white'}}>{this.state.firstName}</Text>
           </View>
-          <View>
+          <View style={{marginRight:15}}>
           <Image
             source={{uri:this.state.picUri}}
             style={{ width: 44, height: 44, borderRadius: 25, borderWidth: 1 }}

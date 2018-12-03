@@ -3,110 +3,89 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DALProj
 {
     public class DBService
     {
-        static string conStr = Globals.connectionString;
-        static SqlConnection con;
-        static SqlCommand com = new SqlCommand();
-        static SqlDataReader rdr;
+        static readonly string ConStr = Globals.ConnectionString;
+        static SqlConnection _con;
+        static SqlCommand _com = new SqlCommand();
+        static SqlDataReader _rdr;
 
-        static public int Register(string UserName, string Fname, string Lname, int Age, string Telephone, string Password, string email)
+        public static int Register(string userName, string fname, string lname, int age, string telephone, string password, string email)
         {
 
 
-            con = new SqlConnection(conStr);
+            _con = new SqlConnection(ConStr);
 
-            SqlCommand com = new SqlCommand("ValidateUserExists", con);
-            com.CommandType = CommandType.StoredProcedure;
+            var com = new SqlCommand("ValidateUserExists", _con) { CommandType = CommandType.StoredProcedure };
 
-            com.Parameters.Add("@User_name", SqlDbType.NVarChar, 50).Value = UserName;
+            com.Parameters.Add("@User_name", SqlDbType.NVarChar, 50).Value = userName;
             com.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
-            SqlParameter outPutParameter = new SqlParameter();
+            var outPutParameter = new SqlParameter();
             outPutParameter.ParameterName = "@isExists";
-            outPutParameter.SqlDbType = System.Data.SqlDbType.Int;
-            outPutParameter.Direction = System.Data.ParameterDirection.Output;
+            outPutParameter.SqlDbType = SqlDbType.Int;
+            outPutParameter.Direction = ParameterDirection.Output;
             com.Parameters.Add(outPutParameter);
 
-            con.Open();
+            _con.Open();
             com.ExecuteNonQuery();
-            int res = (int)outPutParameter.Value;
-            
+            var res = (int)outPutParameter.Value;
 
 
-            if (res == 2)
+            if (res != 2) return 0;
+
+            var uuId = 0;
+            var result = 0;
+            com = new SqlCommand("RegistrationProc", _con) { CommandType = CommandType.StoredProcedure };
+
+            com.Parameters.Add("@User_name", SqlDbType.NVarChar, 50).Value = userName;
+            com.Parameters.Add("@F_name", SqlDbType.NVarChar, 50).Value = fname;
+            com.Parameters.Add("@L_name", SqlDbType.NVarChar, 50).Value = lname;
+            com.Parameters.Add("@Age", SqlDbType.Int).Value = age;
+            com.Parameters.Add("@Telephone", SqlDbType.VarChar, 50).Value = telephone;
+            com.Parameters.Add("@Registraion_date", SqlDbType.NVarChar, 50).Value = DateTime.Now.ToShortDateString();
+            com.Parameters.Add("@Password", SqlDbType.NVarChar, 50).Value = password;
+            com.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
+
+            try
+            {
+                com.ExecuteNonQuery();
+                result = 1;
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText(Globals.LogFilePath + "\\ERRORlog.txt", "class:DBService , func:InsertUser " + "date: " + DateTime.Now.ToShortDateString() + " " + e.Message + "\n");
+            }
+            finally
             {
 
-                int result = 0;
-                int Uu_id = 0;
-                com = new SqlCommand("RegistrationProc",con);
-                com.CommandType = CommandType.StoredProcedure;
-
-                com.Parameters.Add("@User_name", SqlDbType.NVarChar, 50).Value = UserName;
-                com.Parameters.Add("@F_name", SqlDbType.NVarChar, 50).Value = Fname;
-                com.Parameters.Add("@L_name", SqlDbType.NVarChar, 50).Value = Lname;
-                com.Parameters.Add("@Age", SqlDbType.Int).Value = Age;
-                com.Parameters.Add("@Telephone", SqlDbType.VarChar, 50).Value = Telephone;
-                com.Parameters.Add("@Registraion_date", SqlDbType.NVarChar, 50).Value = DateTime.Now.ToShortDateString();
-                com.Parameters.Add("@Password", SqlDbType.NVarChar, 50).Value = Password;
-                com.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
-
-
-               // testc;
-
-
-
-                try
+                if (result == 1)
                 {
-                   
-                    com.ExecuteNonQuery();
-                    result = 1;
-                }
-                catch (Exception e)
-                {
-                    File.AppendAllText(Globals.LogFilePath + "\\ERRORlog.txt", "class:DBService , func:InsertUser " + "date: " + DateTime.Now.ToShortDateString() + " " + e.Message +"\n");
-                }
-                finally
-                {
-
-                    if (result == 1)
+                    com.CommandType = CommandType.Text;
+                    com.CommandText = "SELECT  TOP 1 * FROM Players ORDER BY Uu_id DESC";
+                    _rdr = com.ExecuteReader();
+                    if (_rdr.Read())
                     {
-                        com.CommandType = CommandType.Text;
-                        com.CommandText = "SELECT  TOP 1 * FROM Players ORDER BY Uu_id DESC";
-                        rdr = com.ExecuteReader();
-                        if (rdr.Read())
-                        {
-                            Uu_id = (int)rdr["Uu_id"];
-
-                        }
+                        uuId = (int)_rdr["Uu_id"];
                     }
-
-                    con.Close();
-
-
                 }
-                return Uu_id;
+
+                _con.Close();
             }
-            else
-            {
-                return 0;
-            }
+            return uuId;
         }
 
-        public static int AddPlayerToGame(int gameID, int userId)
+        public static int AddPlayerToGame(int gameId, int userId)
         {
             int res;
-            using (con = new SqlConnection(conStr))
+            using (_con = new SqlConnection(ConStr))
             {
-                con.Open();
-                using (SqlCommand com = new SqlCommand($"INSERT INTO [Player_game]([Game_id],[Uu_id]) VALUES({gameID},{userId}) ", con))
+                _con.Open();
+                using (var com = new SqlCommand($"INSERT INTO [Player_game]([Game_id],[Uu_id]) VALUES({gameId},{userId}) ", _con))
                 {
-                  res = com.ExecuteNonQuery();
+                    res = com.ExecuteNonQuery();
                 }
             }
             return res;
@@ -114,73 +93,58 @@ namespace DALProj
 
         public static DataTable GetUserByEmail(string email)
         {
-            using (con = new SqlConnection(conStr))
+            using (_con = new SqlConnection(ConStr))
             {
-                con.Open();
-                using (SqlDataAdapter adtr = new SqlDataAdapter($"SELECT * FROM Players WHERE [Email]='{email}'", con))
+                _con.Open();
+                using (var adtr = new SqlDataAdapter($"SELECT * FROM Players WHERE [Email]='{email}'", _con))
                 {
-                    DataSet ds = new DataSet();
+                    var ds = new DataSet();
                     adtr.Fill(ds, "User");
 
-                    if (ds.Tables["User"].Rows.Count != 0)
-                    {
-                        return ds.Tables["User"];
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return ds.Tables["User"].Rows.Count != 0 ? ds.Tables["User"] : null;
                 }
             }
         }
 
-        public static string ImgUpload(string base64imgName, int userID)
+        public static string ImgUpload(string base64ImgName, int userId)
         {
-           
-            con = new SqlConnection(conStr);
-            con.Open();
-            com = new SqlCommand($"UPDATE Players SET [PictureName] = '{base64imgName}' WHERE [Uu_id]={userID}", con);
-            com.ExecuteNonQuery();
-            con.Close();
+            _con = new SqlConnection(ConStr);
+            _con.Open();
+            _com = new SqlCommand($"UPDATE Players SET [PictureName] = '{base64ImgName}' WHERE [Uu_id]={userId}", _con);
+            _com.ExecuteNonQuery();
+            _con.Close();
 
             return "OK";
         }
-
-        static public DataTable Login(string UserName, string Password)
+        //try fetch user data from data base using sql parameters and stored procedure to avoid sql injection and for better performance =>
+        //if object contains data return it else return null
+        public static DataTable Login(string userName, string password)
         {
-            con = new SqlConnection(conStr);
-            SqlDataAdapter adtr = new SqlDataAdapter("LoginProc", con);
-            adtr.SelectCommand.CommandType = CommandType.StoredProcedure;
+            _con = new SqlConnection(ConStr);
+            var adtr =
+                new SqlDataAdapter("LoginProc", _con) { SelectCommand = { CommandType = CommandType.StoredProcedure } };
 
-            adtr.SelectCommand.Parameters.Add("@User_name", SqlDbType.NVarChar, 50).Value = UserName;
-            adtr.SelectCommand.Parameters.Add("@Password", SqlDbType.NVarChar, 50).Value = Password;
+            adtr.SelectCommand.Parameters.Add("@User_name", SqlDbType.NVarChar, 50).Value = userName;
+            adtr.SelectCommand.Parameters.Add("@Password", SqlDbType.NVarChar, 50).Value = password;
 
 
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             adtr.Fill(ds, "User");
 
-            if (ds.Tables["User"].Rows.Count != 0)
-            {
-                return ds.Tables["User"];
-            }else
-            {
-                return null;
-            }
-
-
+            return ds.Tables["User"].Rows.Count != 0 ? ds.Tables["User"] : null;
         }
 
-        public static void UpdateNotificationKey(string email, string Token)
+        public static void UpdateNotificationKey(string email, string token)
         {
 
             try
             {
-                con = new SqlConnection(conStr);
-                con.Open();
-                com = new SqlCommand($"Update Players set Token = @token where Email = @email",con);
-                com.Parameters.Add(new SqlParameter("@token", Token));
-                com.Parameters.Add(new SqlParameter("@email", email));
-                com.ExecuteNonQuery();
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand($"Update Players set Token = @token where Email = @email", _con);
+                _com.Parameters.Add(new SqlParameter("@token", token));
+                _com.Parameters.Add(new SqlParameter("@email", email));
+                _com.ExecuteNonQuery();
             }
             catch (Exception e)
             {
@@ -188,8 +152,8 @@ namespace DALProj
             }
             finally
             {
-                if (con != null && con.State == ConnectionState.Open)
-                    con.Close();
+                if (_con != null && _con.State == ConnectionState.Open)
+                    _con.Close();
             }
         }
 
@@ -197,10 +161,10 @@ namespace DALProj
         {
             try
             {
-                con.Open();
-               com = new SqlCommand($"Select Token from Players where Email = @email", con);
-                com.Parameters.Add(new SqlParameter("@email", email));
-                SqlDataAdapter adtr = new SqlDataAdapter(com);
+                _con.Open();
+                _com = new SqlCommand($"Select Token from Players where Email = @email", _con);
+                _com.Parameters.Add(new SqlParameter("@email", email));
+                SqlDataAdapter adtr = new SqlDataAdapter(_com);
 
                 DataSet ds = new DataSet();
                 adtr.Fill(ds, "User");
@@ -214,63 +178,63 @@ namespace DALProj
             }
             finally
             {
-                if (con != null && con.State == ConnectionState.Open)
-                    con.Close();
+                if (_con != null && _con.State == ConnectionState.Open)
+                    _con.Close();
             }
 
             return null;
 
         }
 
-        public static int CreateNewGame(int playersCount,int gameType,int chipCount,List<int> chipType, List<int> chipValues, int bigBlind,int smallBlind,int blindTime,int userID)
+        public static int CreateNewGame(int playersCount, int gameType, int chipCount, List<int> chipType, List<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userID)
         {
-            int gameID = -1;
-            con = new SqlConnection(conStr);
-            con.Open();
-            com = new SqlCommand($"INSERT INTO Games(Game_date,Start_time,End_time,Game_winner,Players_count,Game_type,Chip_count,Big_blind,Small_blind,Blind_time,State_code,Status_code,Uu_id) VALUES(@GameDate,@StartTime,@EndTime,@GameWinner,@playersCount,@gameType,@chipCount,@bigBlind,@smallBlind,@blindTime,@StateCode,@StatusCode,@UserID); SELECT SCOPE_IDENTITY()", con);
+            var gameId = -1;
+            _con = new SqlConnection(ConStr);
+            _con.Open();
+            _com = new SqlCommand($"INSERT INTO Games(Game_date,Start_time,End_time,Game_winner,Players_count,Game_type,Chip_count,Big_blind,Small_blind,Blind_time,State_code,Status_code,Uu_id) VALUES(@GameDate,@StartTime,@EndTime,@GameWinner,@playersCount,@gameType,@chipCount,@bigBlind,@smallBlind,@blindTime,@StateCode,@StatusCode,@UserID); SELECT SCOPE_IDENTITY()", _con);
 
-            com.Parameters.Add("@GameDate", SqlDbType.VarChar, 50).Value = DateTime.Now.ToShortDateString();
-            com.Parameters.Add("@StartTime", SqlDbType.VarChar, 50).Value = DateTime.Now.ToShortTimeString();
-            com.Parameters.Add("@EndTime", SqlDbType.VarChar,50).Value = "";
-            com.Parameters.Add("@GameWinner", SqlDbType.NVarChar,50).Value = "";
-            com.Parameters.Add("@playersCount", SqlDbType.Int).Value = playersCount;
-            com.Parameters.Add("@gameType", SqlDbType.Int).Value = gameType;
-            com.Parameters.Add("@chipCount", SqlDbType.Int).Value = chipCount;
-            //com.Parameters.Add("@chipType", SqlDbType.Int).Value = chipType;
-            //com.Parameters.Add("@chipValues", SqlDbType.Int).Value = chipValues;
-            com.Parameters.Add("@bigBlind", SqlDbType.Int).Value = bigBlind;
-            com.Parameters.Add("@smallBlind", SqlDbType.Int).Value = smallBlind;
-            com.Parameters.Add("@blindTime", SqlDbType.Int).Value = blindTime;
-            com.Parameters.Add("@StateCode", SqlDbType.Bit).Value = 1;
-            com.Parameters.Add("@StatusCode", SqlDbType.Int).Value = 1;
-            com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+            _com.Parameters.Add("@GameDate", SqlDbType.VarChar, 50).Value = DateTime.Now.ToShortDateString();
+            _com.Parameters.Add("@StartTime", SqlDbType.VarChar, 50).Value = DateTime.Now.ToShortTimeString();
+            _com.Parameters.Add("@EndTime", SqlDbType.VarChar, 50).Value = "";
+            _com.Parameters.Add("@GameWinner", SqlDbType.NVarChar, 50).Value = "";
+            _com.Parameters.Add("@playersCount", SqlDbType.Int).Value = playersCount;
+            _com.Parameters.Add("@gameType", SqlDbType.Int).Value = gameType;
+            _com.Parameters.Add("@chipCount", SqlDbType.Int).Value = chipCount;
+            _com.Parameters.Add("@bigBlind", SqlDbType.Int).Value = bigBlind;
+            _com.Parameters.Add("@smallBlind", SqlDbType.Int).Value = smallBlind;
+            _com.Parameters.Add("@blindTime", SqlDbType.Int).Value = blindTime;
+            _com.Parameters.Add("@StateCode", SqlDbType.Bit).Value = 1;
+            _com.Parameters.Add("@StatusCode", SqlDbType.Int).Value = 1;
+            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+
             try
             {
-                 gameID = Convert.ToInt32(com.ExecuteScalar());
-                
+                gameId = Convert.ToInt32(_com.ExecuteScalar());
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                
-            }finally
+
+            }
+            finally
             {
-                con.Close(); 
+                _con.Close();
             }
 
-            UpdateChipState(chipType, chipValues,gameID);
+            UpdateChipState(chipType, chipValues, gameId);
 
-            return gameID;
+            return gameId;
         }
 
-        private static void UpdateChipState(List<int> chipType, List<int> chipValues,int gameID)
+        private static void UpdateChipState(IReadOnlyList<int> chipType, IReadOnlyList<int> chipValues, int gameId)
         {
             for (int i = 0; i < chipValues.Count; i++)
             {
-                using (con = new SqlConnection(conStr))
+                using (_con = new SqlConnection(ConStr))
                 {
-                    con.Open();
-                    using (SqlCommand com = new SqlCommand($"INSERT INTO [Chip_type]([Chip_value], [Chipe_color],[Game_id]) VALUES({chipType[i]},{chipValues[i]},{gameID}) ", con))
+                    _con.Open();
+                    using (var com = new SqlCommand($"INSERT INTO [Chip_type]([Chip_value], [Chipe_color],[Game_id]) VALUES({chipType[i]},{chipValues[i]},{gameId}) ", _con))
                     {
                         com.ExecuteNonQuery();
                     }

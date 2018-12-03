@@ -12,7 +12,8 @@ import {
   center,
   Body,
   StyleSheet,
-  Card
+  Card,
+  Toast
 } from 'native-base';
 import { View } from 'react-native';
 import Expo from "expo";
@@ -50,9 +51,16 @@ class DashboardPage extends Component {
       winCount: props.WinCount,
       createGamemodalVisible: false,
       joinGamemodalVisible: false,
-      CloseModal: true
+      CloseModal: true,
+      User: props.User
 
     };
+  }
+  componentDidMount() {
+    Toast.show({
+      text: "Hello " + this.state.User.FirstName,
+      duration: 10000
+    });
   }
 
   async componentWillMount() {
@@ -150,9 +158,8 @@ class DashboardPage extends Component {
           <Button full style={styles.button} onPress={() => { this.openModal() }} >
             <Text>GAMES HISTORY</Text>
           </Button>
+
         </View>
-
-
       </Container >
     );
   }
@@ -191,10 +198,10 @@ const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.msg,
   errorMassege: state.auth.msg,
   LoseCount: state.auth.LoseCount,
-  WinCount: state.auth.WinCount
+  WinCount: state.auth.WinCount,
+  User:state.auth
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
 
-// <Header
-// style={{marginTop:StatusBar.currentHeight,backgroundColor:"#364051"}} />
+

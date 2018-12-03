@@ -4,3 +4,7 @@ C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\b
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.dll
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.pdb
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\DALProj\obj\Debug\DALProj.csprojResolveAssemblyReference.cache
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\DALProj\bin\Debug\DALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\DALProj\bin\Debug\DALProj.pdb
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\DALProj\obj\Debug\DALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\DALProj\obj\Debug\DALProj.pdb

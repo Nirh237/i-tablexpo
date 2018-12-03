@@ -63,14 +63,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
       const email = this.state.email;
 
 
-
+      //validate email format and field user name contains data before api call to startSignIn
       if(validator.isEmail(email) && !validator.isEmpty(userName)){
         try {
-            this.setState({loading:true});
+            this.setState({loading:true}); // animate loading circle while trying to signing the user
             await this.props.startSignIn(userName,fName,lName,age,telephone,password,email);
-            this.setState({loading:false});
+            this.setState({loading:false}); //stop animate
           const Uu_id = this.props.Uu_id;
-           if(!this.props.isRegister){
+           if(!this.props.isRegister){ //if unable to signin show error messege
              this.setState({error: true});
              Toast.show({
                text: this.props.errorMassege,
@@ -79,7 +79,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
                duration: 8000
              })
            }else{
-           this.props.navigation.navigate('Camera',{Uu_id});
+           this.props.navigation.navigate('Camera',{Uu_id}); //else show camera screen
            }
 
          } catch (error) {
@@ -87,7 +87,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
          }
       }else {
-         Toast.show({
+         Toast.show({//if email format is not valid or user name show error messege
            text: 'valid mail is require and user name!',
            buttonText: "Okay",
            type: "danger"
@@ -102,8 +102,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
         return <Spinner color='blue' style={{
           flex:1,
           alignSelf:"center",
-
-        }} />;//123456
+        }} />;
       }
     return (
       <Container>
@@ -117,7 +116,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
      >
         <Content padder>
 
-        <Item  success = {this.state.error ? false : true} error = {this.state.error || this.state.username === '' ? true : false}>
+        <Item success = {this.state.error ? false : true} error = {this.state.error || this.state.username === '' ? true : false}>
             <Input placeholder='User Name'
              onChangeText={(username) => this.setState({username})}
             value={this.state.username} />

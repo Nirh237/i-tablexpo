@@ -140,3 +140,24 @@ const styles = {
         margin: 15,
     }
 };
+
+
+// handleOnGameTypeChange(value: int) {
+//     this.setState({
+//       gametype: value
+//     });
+
+// // <Item picker>
+                    // // <Picker
+                    //     mode="dropdown"
+                    //     iosIcon={<Icon name="ios-arrow-down-outline" />}
+                    //     style={{ width: undefined }}
+                    //     placeholder="Game Type"
+                    //     placeholderStyle={{ color: "#bfc6ea" }}
+                    //     placeholderIconColor="#007aff"
+                    //     selectedValue={this.state.selected2}
+                    //     onValueChange={this.onValueChange2.bind(this)}
+                    // >
+                    //     <Picker.Item label="CASH" value=0 />
+                    //     <Picker.Item label="TOURNAMENT" value=1 />
+                    // </Picker>

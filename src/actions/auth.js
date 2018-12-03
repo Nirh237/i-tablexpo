@@ -1,5 +1,9 @@
 import Api from '../../server/Api';
 
+export const logout = () => ({
+  type: 'LOGOUT'
+});
+
 export const error = (msg) => ({
     type: 'ERROR',
     msg
