@@ -70,14 +70,15 @@ class LogInPage extends Component {
     //start login - call api, send user name and password
     await this.props.startLogin(this.state.username, this.state.password);
 
-    //Check for user permission => if granted get current token, else undefined
+    //Check for user permission => if granted get current token
     const curToken = await Notification();
 
-
+    //if returned token not eq to token retrived from data base update data base.
     if (curToken != this.props.userDetails.Token) {
       await this.props.startUpdateNotification(this.props.userDetails.Email, curToken);
     }
 
+    //validate user exsists => if true show dash board screen else show error messege and logout.
     if(this.props.errorMassege === undefined){
       this.props.navigation.navigate('DashPage');
     }else{
