@@ -21,7 +21,8 @@ import { StatusBar, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView } 
 import { startUpdateNotification } from '../actions/push_notification';
 import { startLogin, logout } from '../actions/auth';
 import Notification from '../services/push_notifications';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 
 
@@ -97,7 +98,7 @@ class LogInPage extends Component {
 
   render() {
     if (this.state.loading) {
-      return <Expo.AppLoading />; //123456
+      return <Expo.AppLoading />;
     }
     return (
 

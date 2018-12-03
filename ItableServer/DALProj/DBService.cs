@@ -186,7 +186,7 @@ namespace DALProj
 
         }
 
-        public static int CreateNewGame(int playersCount, int gameType, int chipCount, List<int> chipType, List<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userID)
+        public static int CreateNewGame(int playersCount, int gameType, int chipCount, List<int> chipType, List<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userId)
         {
             var gameId = -1;
             _con = new SqlConnection(ConStr);
@@ -205,7 +205,7 @@ namespace DALProj
             _com.Parameters.Add("@blindTime", SqlDbType.Int).Value = blindTime;
             _com.Parameters.Add("@StateCode", SqlDbType.Bit).Value = 1;
             _com.Parameters.Add("@StatusCode", SqlDbType.Int).Value = 1;
-            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
 
             try
             {

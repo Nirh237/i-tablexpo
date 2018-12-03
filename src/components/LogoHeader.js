@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
     render() {
         return (
           <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-          <View style={{justifyContent:'space-around', marginRight:15}}>
+          <View style={{justifyContent:'space-around',marginRight:15}}>
           <Text style={{color:'white'}}>{this.state.firstName}</Text>
           </View>
           <View style={{marginRight:15}}>
