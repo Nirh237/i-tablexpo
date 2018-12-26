@@ -17,7 +17,7 @@ import {
 } from 'native-base';
 import { View } from 'react-native';
 import Expo from "expo";
-import { Modal, StatusBar, TouchableOpacity, Image } from "react-native";
+import { Modal, StatusBar, TouchableOpacity, Image  } from "react-native";
 import JoinGameModal from '../components/JoinGameModal';
 import CreateNewGameModal from '../components/CreateNewGameModal';
 
@@ -112,6 +112,7 @@ class DashboardPage extends Component {
     }
     return (
       <Container style={{ flex: 1, justifyContent: 'space-between' }}>
+      <Content>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
           <Card style={styles.card}>
             <Text>Wine Count {this.state.winCount}</Text>
@@ -160,7 +161,8 @@ class DashboardPage extends Component {
           </Button>
 
         </View>
-      </Container >
+        </Content>
+      </Container>
     );
   }
 }

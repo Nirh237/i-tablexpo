@@ -26,13 +26,14 @@ export const login = ({UserName,FirstName,LastName,Age,PhoneNumber,PicturePath,P
 
   });
 
-//try fech user by user name and password 
+//try fech user by user name and password
 export const startLogin = (userName,password) => {
     return (dispatch) => {
 
-      return Api.post("Login",{userName,password}).then((Response) => {
+      return Api.post("api/user/login",{userName: userName,password: password}).then((Response) => {
 
         const user = JSON.parse(Response.data.d);
+
         //if user contains data save oject state in redux store
         if(user != null) {
             dispatch(login(user));

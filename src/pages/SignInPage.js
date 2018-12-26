@@ -115,21 +115,21 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
       resetScrollToCoords={{x:0,y:0}}
      >
         <Content padder>
-        //validate if user allredy exsists 
+        //validate if user allredy exsists
         <Item success = {this.state.error ? false : true} error = {this.state.error || this.state.username === '' ? true : false}>
             <Input placeholder='User Name'
              onChangeText={(username) => this.setState({username})}
             value={this.state.username} />
             <Icon name={this.state.error || this.state.username === '' ?  'close-circle' : 'checkmark-circle' } />
           </Item>
-          //validate first name have 2 or more chracters 
+          //validate first name have 2 or more chracters
           <Item success = {this.state.firstname.length > 2 ? true : false} error = {this.state.firstname.length <= 2 ? true : false}>
             <Input placeholder='First Name'
              onChangeText={(firstname) => this.setState({firstname})}
               value={this.state.firstname} />
             <Icon name= {this.state.firstname.length > 2 ? 'checkmark-circle' : 'close-circle'  } />
           </Item>
-          //validate last name have 2 or more chracters 
+          //validate last name have 2 or more chracters
           <Item success = {this.state.lastname.length > 2 ? true : false} error = {this.state.lastname.length <= 2 ? true : false}>
             <Input placeholder='LastName'
             onChangeText={(lastname) => this.setState({lastname})}
@@ -151,7 +151,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
             <Icon name= {this.state.telephone.length === 10 ? 'checkmark-circle' : 'close-circle'  } />
           </Item>
           //validate Password lengh is between 7 to 12 chracters, and has at least one digit, one lower case letter,
-          //one upper case letter, and a specieal chracter 
+          //one upper case letter, and a specieal chracter
           <Item success = {validator.matches(this.state.password,/(?=.*\d)(?=.*\W+)(?=.*[a-z])(?=.*[A-Z]).{7,12}/)} error = {!this.state.password.match(/(?=.*\d)(?=.*\W+)(?=.*[a-z])(?=.*[A-Z]).{7,12}/)}>
             <Input secureTextEntry={true} placeholder='Password'
              onChangeText={(password) => this.setState({password})}
