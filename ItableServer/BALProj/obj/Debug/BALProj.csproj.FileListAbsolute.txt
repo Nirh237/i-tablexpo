@@ -7,3 +7,12 @@ C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\o
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\obj\Debug\BALProj.csproj.CopyComplete
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\obj\Debug\BALProj.dll
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\obj\Debug\BALProj.pdb
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\BALProj.dll
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\BALProj.pdb
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\DALProj.dll
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\DALProj.pdb
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.csprojResolveAssemblyReference.cache
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.csproj.CoreCompileInputs.cache
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.csproj.CopyComplete
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.dll
+C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.pdb

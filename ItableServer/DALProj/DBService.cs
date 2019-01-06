@@ -101,6 +101,7 @@ namespace DALProj
         public static int AddPlayerToGame(int gameID, int userId)
         {
             int res;
+            int res2;
             using (con = new SqlConnection(conStr))
             {
                 con.Open();
@@ -108,6 +109,12 @@ namespace DALProj
                 {
                   res = com.ExecuteNonQuery();
                 }
+
+                using (SqlCommand com = new SqlCommand($"INSERT INTO [Chips_for_game_per_player] ([Game_id],[Pot_count],[P1],[P2],[P3],[Player_id1],[A1],[A2],[A3],[Player_id2],[B1],[B2],[B3],[Player_id3],[C1],[C2],[C3],[Total_chips]) VALUES({gameID},0,0,0,0,{userId},1,1,1,0,0,0,0,0,0,0,0,0) ", con))
+                {
+                    res2 = com.ExecuteNonQuery();
+                }
+
             }
             return res;
         }
