@@ -1,5 +1,9 @@
 import Api from '../../server/Api';
 
+export const logout = () => ({
+  type: 'LOGOUT'
+});
+
 export const error = (msg) => ({
     type: 'ERROR',
     msg
@@ -22,7 +26,7 @@ export const login = ({UserName,FirstName,LastName,Age,PhoneNumber,PicturePath,P
 
   });
 
-
+//try fech user by user name and password
 export const startLogin = (userName,password) => {
     return (dispatch) => {
 
@@ -30,11 +34,11 @@ export const startLogin = (userName,password) => {
 
         const user = JSON.parse(Response.data.d);
 
+        //if user contains data save oject state in redux store
         if(user != null) {
-
             dispatch(login(user));
         }
-        else {
+        else { //if user does not contain data show error messesge
           dispatch(error('Error email or password.'));
         }
       }).catch((error) => {

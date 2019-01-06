@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BALProj
+﻿namespace BALProj
 {
     public class User
     {
@@ -22,12 +16,11 @@ namespace BALProj
         public string Token { get; set; }
 
 
-
-
         public User()
         {
 
         }
+
         public User(string userName , string fName , string lName , int age , string telephone , string picture , string password, string email,int id, int winCount, int loseCount, string token = "notoken")
         {
             UserName = userName;
@@ -42,9 +35,6 @@ namespace BALProj
             WinCount = winCount;
             LoseCount = loseCount;
             Token = token;
-
-
-
         }
     }
 }

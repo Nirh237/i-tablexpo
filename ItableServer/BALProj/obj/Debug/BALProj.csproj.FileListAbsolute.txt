@@ -7,6 +7,7 @@ C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\o
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\obj\Debug\BALProj.csproj.CopyComplete
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\obj\Debug\BALProj.dll
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\BALProj\obj\Debug\BALProj.pdb
+<<<<<<< HEAD
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\BALProj.dll
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\BALProj.pdb
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\bin\Debug\DALProj.dll
@@ -16,3 +17,12 @@ C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.csproj.
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.csproj.CopyComplete
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.dll
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.pdb
+=======
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\bin\Debug\BALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\bin\Debug\BALProj.pdb
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\bin\Debug\DALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\bin\Debug\DALProj.pdb
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.csprojResolveAssemblyReference.cache
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\BALProj\obj\Debug\BALProj.pdb
+>>>>>>> a877da5dde7303d5755113618bac7f3795ebfdbe

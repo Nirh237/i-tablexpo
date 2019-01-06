@@ -71,6 +71,7 @@ C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\ItableSer
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\ItableService\bin\DALProj.dll
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\ItableService\bin\BALProj.pdb
 C:\Users\nirh2\Desktop\לימודים\פרויקט גמר\ItableServer\ItableService\bin\DALProj.pdb
+<<<<<<< HEAD
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\bin\ItableService.dll.config
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\bin\ItableService.dll
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\bin\ItableService.pdb
@@ -144,3 +145,76 @@ C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableSer
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableService.csproj.CopyComplete
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableService.dll
 C:\Users\nirh2\Desktop\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableService.pdb
+=======
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\ItableService.dll.config
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\ItableService.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\ItableService.pdb
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\csc.exe
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\csc.exe.config
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\csc.rsp
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\csi.exe
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\csi.exe.config
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\csi.rsp
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.AppContext.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Collections.Immutable.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Console.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Diagnostics.Process.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.IO.Compression.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.IO.FileSystem.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.IO.Pipes.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Reflection.Metadata.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.AccessControl.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.Claims.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Security.Principal.Windows.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Threading.Thread.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.ValueTuple.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Xml.XmlDocument.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Xml.XPath.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\vbc.exe
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\vbc.exe.config
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\vbc.rsp
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\VBCSCompiler.exe
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\roslyn\VBCSCompiler.exe.config
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\BALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\DALProj.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\Microsoft.Web.Infrastructure.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\Newtonsoft.Json.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\Swashbuckle.Core.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\System.Net.Http.Formatting.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\System.Web.Http.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\System.Web.Http.WebHost.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\WebActivatorEx.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\BALProj.pdb
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\DALProj.pdb
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\Newtonsoft.Json.xml
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\System.Net.Http.Formatting.xml
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\System.Web.Http.xml
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\bin\System.Web.Http.WebHost.xml
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableService.csprojResolveAssemblyReference.cache
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableService.dll
+D:\React Native\i-tableExpo\i-tablexpo\ItableServer\ItableService\obj\Debug\ItableService.pdb
+>>>>>>> a877da5dde7303d5755113618bac7f3795ebfdbe

@@ -1,58 +1,43 @@
 ﻿using DALProj;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace BALProj
 {
-   public  class BAL
+    public class BAL
     {
-        static public string Register(string UserName, string Fname, string Lname, int Age, string Telephone, string Password, string email)
+        public static string Register(string userName, string fname, string lname, int age, string telephone, string password, string email)
         {
-            int res = DBService.Register(UserName, Fname, Lname, Age, Telephone, Password, email);
-            if (res != 0)
-            {
-                return res.ToString();
-            }
-            else
-            {
-                return "User Name or Email is already exists!";
-            }
+            var res = DBService.Register(userName, fname, lname, age, telephone, password, email);
 
+            return res != 0 ? res.ToString() : "User Name or Email is already exists!";
         }
 
-        static public User Login(string UserName, string Password)
+        public static User Login(string userName, string password)
         {
-            var u =  DBService.Login(UserName, Password);
-            if (u != null)
-            {
-                //insterd default values to vars
-                User user = new User(u.Rows[0]["User_name"].ToString(), u.Rows[0]["F_name"].ToString(), u.Rows[0]["L_name"].ToString(), (int)u.Rows[0]["Age"], u.Rows[0]["Telephone"].ToString(), u.Rows[0]["PictureName"].ToString(), u.Rows[0]["Password"].ToString(), u.Rows[0]["Email"].ToString(), (int)u.Rows[0]["Uu_id"], (int)u.Rows[0]["Win_count"], (int)u.Rows[0]["Lose_count"], u.Rows[0]["Token"].ToString());
-                return user;
-            }else
-            {
-                return null;
-            }
+            var u = DBService.Login(userName, password);
+            if (u == null) return null;
+            //insterd default values to vars
+            var user = new User(u.Rows[0]["User_name"].ToString(), u.Rows[0]["F_name"].ToString(), u.Rows[0]["L_name"].ToString(),
+                                (int)u.Rows[0]["Age"], u.Rows[0]["Telephone"].ToString(), u.Rows[0]["PictureName"].ToString(),
+                                u.Rows[0]["Password"].ToString(), u.Rows[0]["Email"].ToString(), (int)u.Rows[0]["Uu_id"],
+                                (int)u.Rows[0]["Win_count"], (int)u.Rows[0]["Lose_count"], u.Rows[0]["Token"].ToString());
+
+            return user;
         }
 
         public static User GetUserByEmail(string email)
         {
             var u = DBService.GetUserByEmail(email);
-            if (u != null)
-            {
-                //insterd default values to vars
-                User user = new User(u.Rows[0]["User_name"].ToString(), u.Rows[0]["F_name"].ToString(), u.Rows[0]["L_name"].ToString(), (int)u.Rows[0]["Age"], u.Rows[0]["Telephone"].ToString(), u.Rows[0]["PictureName"].ToString(), u.Rows[0]["Password"].ToString(), u.Rows[0]["Email"].ToString(), (int)u.Rows[0]["Uu_id"], (int)u.Rows[0]["Win_count"], (int)u.Rows[0]["Lose_count"], u.Rows[0]["Token"].ToString());
-                return user;
-            }
-            else
-            {
-                return null;
-            }
+            if (u == null) return null;
+            //insterd default values to vars
+            var user = new User(u.Rows[0]["User_name"].ToString(), u.Rows[0]["F_name"].ToString(), u.Rows[0]["L_name"].ToString(),
+                                (int)u.Rows[0]["Age"], u.Rows[0]["Telephone"].ToString(), u.Rows[0]["PictureName"].ToString(),
+                                u.Rows[0]["Password"].ToString(), u.Rows[0]["Email"].ToString(), (int)u.Rows[0]["Uu_id"],
+                                (int)u.Rows[0]["Win_count"], (int)u.Rows[0]["Lose_count"], u.Rows[0]["Token"].ToString());
+
+            return user;
+
         }
 
         public static void InitLogFilePath(string v)
@@ -60,21 +45,21 @@ namespace BALProj
             Globals.LogFilePath = v;
         }
 
-        public static string ImgUpload(string base64imgName, int userID)
+        public static string ImgUpload(string base64ImgName, int userId)
         {
-            string res=DBService.ImgUpload(base64imgName, userID);
+            var res = DBService.ImgUpload(base64ImgName, userId);
+
             return "OK";
-
         }
 
 
-        public static void AddNotification(string email, string Token)
+        public static void AddNotification(string email, string token)
         {
-            DBService.UpdateNotificationKey(email, Token);
+            DBService.UpdateNotificationKey(email, token);
         }
 
-        //שליחת הזמנה למשחק הכוללת הודעת פוש המפנה לעמוד "אשר/בטל הזמנה" 
-        public static void SendInvitation(string token, string title, string body,int gameID)
+        //שליחת הזמנה למשחק הכוללת הודעת פוש המפנה לעמוד "אשר/בטל הזמנה"
+        public static void SendInvitation(string token, string title, string body,int gameId)
         {
             var objectToSend = new
             {
@@ -82,24 +67,21 @@ namespace BALProj
                 title = title,
                 body = body,
                 badge = 3,
-                data = new { gameID } //שליחת מספר משחק ע"מ להכניס את פרטי השחקן למשחק המתאים כאשר הוא מאשר את ההזמנה
+                data = new { gameID = gameId } //שליחת מספר משחק ע"מ להכניס את פרטי השחקן למשחק המתאים כאשר הוא מאשר את ההזמנה
             };
 
-            string postData = new JavaScriptSerializer().Serialize(objectToSend);
-
+            var postData = new JavaScriptSerializer().Serialize(objectToSend);
 
             using (var client = new WebClient())
             {
-
                 client.Headers.Add("accept", "application/json");
                 client.Headers.Add("accept-encoding", "gzip, deflate");
                 client.Headers.Add("Content-Type", "application/json");
-                var response = client.UploadString("https://exp.host/--/api/v2/push/send", postData);
-                
+                client.UploadString("https://exp.host/--/api/v2/push/send", postData);
             }
 
         }
 
-      
+
     }
 }

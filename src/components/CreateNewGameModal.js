@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, TouchableHighlight, View, Alert, TouchableOpacity } from 'react-native';
+import { Modal, TouchableHighlight, View, Alert, TouchableOpacity,KeyboardAvoidingView } from 'react-native';
 import {
     Container,
     Header,
@@ -61,6 +61,7 @@ class CreateNewGameModal extends Component {
 
     render() {
         return (
+            <KeyboardAvoidingView>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -72,7 +73,6 @@ class CreateNewGameModal extends Component {
                     <Text style={{ color: 'black', fontSize: 25, margin: 10 }}>ENTER YOUR TABLE ID:</Text>
                     <Input
                         type="text"
-                        autoFocus
                         style={styles.input}
                         onChangeText={(tableid) => this.setState({ tableid })}
                         value={this.state.tableid} />
@@ -88,7 +88,7 @@ class CreateNewGameModal extends Component {
                     </Button>
                 </Form>
             </Modal>
-
+            </KeyboardAvoidingView>
 
         );
     }

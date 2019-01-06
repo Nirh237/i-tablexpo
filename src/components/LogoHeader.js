@@ -6,8 +6,6 @@ import { StatusBar, TouchableOpacity,Image } from "react-native";
 import { connect } from 'react-redux';
 
 
-
-
  class LogoTitle extends React.Component {
     constructor(props) {
         super(props);

@@ -12,15 +12,17 @@ import {
   center,
   Body,
   Label,
-  H1
+  H1,
+  Toast
 } from 'native-base';
 import { View, Platform } from 'react-native';
 import Expo from "expo";
 import { StatusBar, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView } from "react-native";
 import { startUpdateNotification } from '../actions/push_notification';
-import { startLogin } from '../actions/auth';
+import { startLogin, logout } from '../actions/auth';
 import Notification from '../services/push_notifications';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 
 
@@ -66,28 +68,37 @@ class LogInPage extends Component {
 
   handleSubmit = async () => {
 
-    //start login
+    //start login - call api, send user name and password
     await this.props.startLogin(this.state.username, this.state.password);
+
+    //Check for user permission => if granted get current token
     const curToken = await Notification();
 
+    //if returned token not eq to token retrived from data base update data base.
     if (curToken != this.props.userDetails.Token) {
       await this.props.startUpdateNotification(this.props.userDetails.Email, curToken);
     }
-    
-    debugger;
-    if(this.props.errorMassege === undefined)
-    {
-    this.props.navigation.navigate('DashPage');
+
+    //validate user exsists => if true show dash board screen else show error messege and logout.
+    if(this.props.errorMassege === undefined){
+      this.props.navigation.navigate('DashPage');
     }else{
+      Toast.show({
+        text: this.props.errorMassege,
+        buttonText: "Okay",
+        type: "danger",
+        duration: 8000
+      });
       this.props.logout();
     }
+
 
 
   };
 
   render() {
     if (this.state.loading) {
-      return <Expo.AppLoading />; //123456
+      return <Expo.AppLoading />;
     }
     return (
 
@@ -117,7 +128,7 @@ class LogInPage extends Component {
 
             <Item floatingLabel>
               <Label>Password</Label>
-              <Input
+              <Input secureTextEntry={true}
                 onChangeText={(password) => this.setState({ password })}
                 value={this.state.password} />
             </Item>

@@ -12,11 +12,12 @@ import {
   center,
   Body,
   StyleSheet,
-  Card
+  Card,
+  Toast
 } from 'native-base';
 import { View } from 'react-native';
 import Expo from "expo";
-import { Modal, StatusBar, TouchableOpacity, Image } from "react-native";
+import { Modal, StatusBar, TouchableOpacity, Image  } from "react-native";
 import JoinGameModal from '../components/JoinGameModal';
 import CreateNewGameModal from '../components/CreateNewGameModal';
 
@@ -50,9 +51,16 @@ class DashboardPage extends Component {
       winCount: props.WinCount,
       createGamemodalVisible: false,
       joinGamemodalVisible: false,
-      CloseModal: true
+      CloseModal: true,
+      User: props.User
 
     };
+  }
+  componentDidMount() {
+    Toast.show({
+      text: "Hello " + this.state.User.FirstName,
+      duration: 10000
+    });
   }
 
   async componentWillMount() {
@@ -104,6 +112,7 @@ class DashboardPage extends Component {
     }
     return (
       <Container style={{ flex: 1, justifyContent: 'space-between' }}>
+      <Content>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
           <Card style={styles.card}>
             <Text>Wine Count {this.state.winCount}</Text>
@@ -150,10 +159,10 @@ class DashboardPage extends Component {
           <Button full style={styles.button} onPress={() => { this.openModal() }} >
             <Text>GAMES HISTORY</Text>
           </Button>
+
         </View>
-
-
-      </Container >
+        </Content>
+      </Container>
     );
   }
 }
@@ -191,10 +200,10 @@ const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.msg,
   errorMassege: state.auth.msg,
   LoseCount: state.auth.LoseCount,
-  WinCount: state.auth.WinCount
+  WinCount: state.auth.WinCount,
+  User:state.auth
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
 
-// <Header
-// style={{marginTop:StatusBar.currentHeight,backgroundColor:"#364051"}} />
+
