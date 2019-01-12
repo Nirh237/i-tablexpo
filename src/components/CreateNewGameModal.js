@@ -17,6 +17,7 @@ import {
     H1
 } from 'native-base';
 import LogoTitle from '../components/LogoHeader';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 class CreateNewGameModal extends Component {
@@ -41,7 +42,8 @@ class CreateNewGameModal extends Component {
 
         this.state = {
             modalVisible: false,
-            tableid: ""
+            tableid: "",
+            error:''
         };
     }
 
@@ -50,7 +52,6 @@ class CreateNewGameModal extends Component {
     }
 
     handleTableIdChange = (e) => {
-
         this.setState(() => ({ tableid: e.target.value }));
     }
 
@@ -61,34 +62,36 @@ class CreateNewGameModal extends Component {
 
     render() {
         return (
-            <KeyboardAvoidingView>
+
             <Modal
                 animationType="slide"
                 transparent={true}
                 visible={this.props.createGamemodalVisible}
-                onRequestClose=
-                {this.props.closeModal}
+                onRequestClose={this.props.closeModal}
             >
+            <KeyboardAwareScrollView>
                 <Form style={styles.form}>
-                    <Text style={{ color: 'black', fontSize: 25, margin: 10 }}>ENTER YOUR TABLE ID:</Text>
+                    <Text style={{ color: 'white', fontSize: 18, margin: 10 }}>ENTER YOUR TABLE ID:</Text>
                     <Input
                         type="text"
                         style={styles.input}
                         onChangeText={(tableid) => this.setState({ tableid })}
-                        value={this.state.tableid} />
+                        value={this.state.tableid}
+                         />
 
                     <Button full style={{ margin: 10, backgroundColor: 'black' }} onPress={() => {
+                        if(this.state.tableid)
                         this.props.closeModal('CreateGame');
 
-
-
-
+                        this.setState(() => ({error:"Table Id Required"}))
                     }}>
                         <Text>NEXT</Text>
                     </Button>
+                    <Text style={{color:'red'}}>{this.state.error}</Text>
                 </Form>
+                </KeyboardAwareScrollView>
             </Modal>
-            </KeyboardAvoidingView>
+
 
         );
     }
@@ -104,7 +107,6 @@ const mapStateToProps = (state) => ({
     isAuthenticated: !!state.auth.msg,
     errorMassege: state.auth.msg,
     userDetails: state.auth
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewGameModal);
@@ -116,17 +118,14 @@ const styles = {
         flexDirection: "column",
         marginTop: 250,
         marginBottom: 220,
-        backgroundColor: '#0279fe',
-        borderColor: 'black',
-        borderStyle: 'solid',
-        borderWidth: 5,
-        borderRadius: 10
-
+        backgroundColor: '#364051',
+        borderWidth: 0,
+        borderRadius: 12
     },
 
     input: {
         backgroundColor: 'white',
-        height: 50,
+        height: 30,
         width: 300,
         borderColor: 'gray',
         borderWidth: 1,
