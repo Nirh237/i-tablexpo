@@ -81,6 +81,12 @@ namespace BALProj
 
         }
 
+        public static string CreateNewGame(int playersCount, int gameType, int chipCount, int bigBlind, int smallBlind, int blindTime, int userId)
+        {
+            int res = DBService.CreateNewGame(playersCount, gameType, chipCount, bigBlind, smallBlind, blindTime, userId);
+            return new JavaScriptSerializer().Serialize(res);
+        }
+
 
     }
 }

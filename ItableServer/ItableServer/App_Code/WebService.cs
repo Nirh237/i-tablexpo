@@ -168,6 +168,12 @@ public class WebService : System.Web.Services.WebService
     //    return new JavaScriptSerializer().Serialize(res);
     //}
 
+    [WebMethod]
+    public string CreateNewGame(int playersCount, int gameType, int chipCount, int bigBlind, int smallBlind, int blindTime, int userId)
+    {
+        string res = BAL.CreateNewGame(playersCount, gameType, chipCount, bigBlind, smallBlind, blindTime, userId);
+        return new JavaScriptSerializer().Serialize(res);
+    }
 
 
 

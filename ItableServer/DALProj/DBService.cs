@@ -186,7 +186,7 @@ namespace DALProj
 
         }
 
-        public static int CreateNewGame(int playersCount, int gameType, int chipCount, List<int> chipType, List<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userID)
+        public static int CreateNewGame(int playersCount, int gameType, int chipCount, int bigBlind, int smallBlind, int blindTime, int userId)
         {
             var gameId = -1;
             _con = new SqlConnection(ConStr);
@@ -205,7 +205,7 @@ namespace DALProj
             _com.Parameters.Add("@blindTime", SqlDbType.Int).Value = blindTime;
             _com.Parameters.Add("@StateCode", SqlDbType.Bit).Value = 1;
             _com.Parameters.Add("@StatusCode", SqlDbType.Int).Value = 1;
-            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
 
             try
             {
@@ -222,9 +222,22 @@ namespace DALProj
                 _con.Close();
             }
 
-            UpdateChipState(chipType, chipValues, gameId);
+            AddChipsForPlayer(gameId, userId);
 
             return gameId;
+        }
+
+        public static void AddChipsForPlayer(int gameId, int userID)
+        {
+            _con = new SqlConnection(ConStr);
+            _con.Open();
+            _com = new SqlCommand($"INSERT INTO [Chips_for_game_per_player](,gameId,Pot_count,P1,P2,P3,Player_id1,A1,A2,A3) VALUES(@GameID,0,0,0,0@UserID,0,0,0); SELECT SCOPE_IDENTITY()", _con);
+
+            _com.Parameters.Add("@GameID", SqlDbType.Int).Value = gameId;
+            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+
+            _con.Close();
+
         }
 
         private static void UpdateChipState(IReadOnlyList<int> chipType, IReadOnlyList<int> chipValues, int gameId)
