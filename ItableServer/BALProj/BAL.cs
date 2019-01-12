@@ -1,4 +1,6 @@
 ﻿using DALProj;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Script.Serialization;
 
@@ -81,12 +83,25 @@ namespace BALProj
 
         }
 
-        public static string CreateNewGame(int playersCount, int gameType, int chipCount, int bigBlind, int smallBlind, int blindTime, int userId)
+        public static string CreateNewGame(int playersCount, int gameType, int chipCount, IEnumerable<string> chipTypes, IEnumerable<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userId)
         {
-            int res = DBService.CreateNewGame(playersCount, gameType, chipCount, bigBlind, smallBlind, blindTime, userId);
+            int res = DBService.CreateNewGame(playersCount, gameType, chipCount, chipTypes, chipValues, bigBlind, smallBlind, blindTime, userId);
             return new JavaScriptSerializer().Serialize(res);
         }
 
+        public static string AddPlayerToGame(int gameId, int userId)
+        {
+           string res = DBService.AddChipsForPlayer(gameId, userId);
 
+            return res;
+            
+        }
+
+        public static string CheckTableId(int tableId, int userId)
+        {
+            string res = DBService.CheckTableId(tableId, userId);
+
+            return res;
+        }
     }
 }
