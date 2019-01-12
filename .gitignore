@@ -119,3 +119,5 @@ npm-debug.*
 /ItableServer/packages/Microsoft.AspNet.WebApi.Cors.5.2.3/Microsoft.AspNet.WebApi.Cors.5.2.3.nupkg
 /src/.expo/packager-info.json
 /src/.expo/settings.json
+/ItableServer/BALProj/obj/Debug/BALProj.csprojResolveAssemblyReference.cache
+/ItableServer/DALProj/obj/Debug/DALProj.csprojResolveAssemblyReference.cache
