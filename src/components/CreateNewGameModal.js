@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, TouchableHighlight, View, Alert, TouchableOpacity } from 'react-native';
+import { Modal, TouchableHighlight, View, Alert, TouchableOpacity,KeyboardAvoidingView } from 'react-native';
 import {
     Container,
     Header,
@@ -17,6 +17,8 @@ import {
     H1
 } from 'native-base';
 import LogoTitle from '../components/LogoHeader';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { startValidateTableId } from '../actions/game';
 
 
 class CreateNewGameModal extends Component {
@@ -41,7 +43,8 @@ class CreateNewGameModal extends Component {
 
         this.state = {
             modalVisible: false,
-            tableid: ""
+            tableid: "",
+            error:''
         };
     }
 
@@ -50,43 +53,46 @@ class CreateNewGameModal extends Component {
     }
 
     handleTableIdChange = (e) => {
-
         this.setState(() => ({ tableid: e.target.value }));
     }
 
-    closeModal = () => {
-        this.props.closeModal();
+    handleButtonClick = async (tableid) => {
+         await this.props.startValidateTableId(tableid,this.props.userDetails.ID);
+         this.props.closeModal('CreateGame');
     }
 
 
     render() {
         return (
+
             <Modal
                 animationType="slide"
                 transparent={true}
                 visible={this.props.createGamemodalVisible}
-                onRequestClose=
-                {this.props.closeModal}
+                onRequestClose={this.props.closeModal}
             >
+            <KeyboardAwareScrollView>
                 <Form style={styles.form}>
-                    <Text style={{ color: 'black', fontSize: 25, margin: 10 }}>ENTER YOUR TABLE ID:</Text>
+                    <Text style={{ color: 'white', fontSize: 18, margin: 10 }}>ENTER YOUR TABLE ID:</Text>
                     <Input
                         type="text"
-                        autoFocus
                         style={styles.input}
-                        onChangeText={(tableid) => this.setState({ tableid })}
-                        value={this.state.tableid} />
+                        onChangeText={(tableid) => this.setState({ tableid:tableid, error:'' })}
+                        value={this.state.tableid}
+                         />
 
                     <Button full style={{ margin: 10, backgroundColor: 'black' }} onPress={() => {
-                        this.props.closeModal('CreateGame');
-
-
-
-
+                        if(this.state.tableid){
+                            this.handleButtonClick(this.state.tableid);
+                        }else {
+                            this.setState(() => ({error:"Table Id Required"}));
+                        }
                     }}>
                         <Text>NEXT</Text>
                     </Button>
+                    <Text style={{color:'red'}}>{this.state.error}</Text>
                 </Form>
+                </KeyboardAwareScrollView>
             </Modal>
 
 
@@ -97,14 +103,14 @@ class CreateNewGameModal extends Component {
 const mapDispatchToProps = (dispatch) => ({
     startLogin: (userName, password) => dispatch(startLogin(userName, password)),
     startUpdateNotification: (email, Token) => dispatch(startUpdateNotification(email, Token)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    startValidateTableId: (tableId, userId) => dispatch(startValidateTableId(tableId, userId))
 });
 
 const mapStateToProps = (state) => ({
     isAuthenticated: !!state.auth.msg,
     errorMassege: state.auth.msg,
     userDetails: state.auth
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewGameModal);
@@ -116,17 +122,14 @@ const styles = {
         flexDirection: "column",
         marginTop: 250,
         marginBottom: 220,
-        backgroundColor: '#0279fe',
-        borderColor: 'black',
-        borderStyle: 'solid',
-        borderWidth: 5,
-        borderRadius: 10
-
+        backgroundColor: '#364051',
+        borderWidth: 0,
+        borderRadius: 12
     },
 
     input: {
         backgroundColor: 'white',
-        height: 50,
+        height: 30,
         width: 300,
         borderColor: 'gray',
         borderWidth: 1,
