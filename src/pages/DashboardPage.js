@@ -20,7 +20,6 @@ import Expo from "expo";
 import { Modal, StatusBar, TouchableOpacity, Image } from "react-native";
 import JoinGameModal from '../components/JoinGameModal';
 import CreateNewGameModal from '../components/CreateNewGameModal';
-
 import LogoTitle from '../components/LogoHeader';
 
 
@@ -85,23 +84,29 @@ class DashboardPage extends Component {
   }
 
   closeModal = (closeModalName) => {
-    if (closeModalName === 'CreateGame') {
+    debugger;
+    if(closeModalName === 'CreateGame'){
+    if (this.props.isTableIdValid) {
       this.setState(() => ({
         createGamemodalVisible: false
-
       }));
-      this
+        this
         .props
         .navigation
         .navigate('CreateNewGame');
-
-    } else {
-      this.setState(() => ({
-        joinGamemodalVisible: false
-
-      }));
-    }
-
+      }else{
+        Toast.show({
+          text: "Table id is incorrect",
+          buttonText: "Okay",
+          type: "danger",
+          duration: 8000
+        });
+      }
+    }else{ this.setState(() => ({
+      joinGamemodalVisible: false
+    }));
+  }
+    
   }
 
 
@@ -160,7 +165,7 @@ class DashboardPage extends Component {
           </Button>
 
         </View>
-      </Container >
+      </Container>
     );
   }
 }
@@ -191,7 +196,7 @@ const styles = {
 
 const mapDispatchToProps = (dispatch) => ({
   startLogin: (userName, password) => dispatch(startLogin(userName, password)),
-  logout: () => dispatch(logout())
+  logout: () => dispatch(logout()),
 });
 
 const mapStateToProps = (state) => ({
@@ -199,7 +204,8 @@ const mapStateToProps = (state) => ({
   errorMassege: state.auth.msg,
   LoseCount: state.auth.LoseCount,
   WinCount: state.auth.WinCount,
-  User:state.auth
+  User:state.auth,
+  isTableIdValid: state.game.isTableIdValid
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

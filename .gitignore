@@ -67,6 +67,8 @@ packages/
 /src/.expo/settings.json
 /ItableServer/.vs/ItableServer/v15/.suo
 /ItableServer/.vs/ItableServer/v15/Server/sqlite3/storage.ide-shm
+/ItableServer/BALProj/obj/Debug/BALProj.csprojResolveAssemblyReference.cache
+/ItableServer/DALProj/obj/Debug/DALProj.csprojResolveAssemblyReference.cache
 /ItableServer/.vs/config/applicationhost.config
 /ItableServer/BALProj/bin/Debug/BALProj.dll
 /ItableServer/BALProj/bin/Debug/BALProj.pdb
