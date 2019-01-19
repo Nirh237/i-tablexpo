@@ -7,6 +7,16 @@ export default (state = {},action) => {
             isTableIdValid: action.isTableIdValid
         };
 
+        case 'GAMEID':
+        return {
+            NewGameId: action.NewGameId
+        };
+
+        case 'JOINGAME':
+        return {
+            joinNewGame: action.joinNewGame
+        };
+
         default:
             return state;
     }

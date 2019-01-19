@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import registerForNotification from './services/push_notifications';
 import CreateNewGamePage from './pages/CreateNewGamePage';
 import CreateNewGameModal from './components/CreateNewGameModal';
+import GameScreen from './pages/GamePage';
 
 
 
@@ -51,12 +52,12 @@ export const AppNavigator = createStackNavigator(
     SignInPage: { screen: SignInPage },
     Camera: { screen: CameraScreen },
     Picture: { screen: cuurentPictureScreen },
-    CreateNewGame: { screen: CreateNewGamePage }
-
+    CreateNewGame: { screen: CreateNewGamePage},
+    GameScreen:{ screen:GameScreen }
 
   },
   {
-    initialRouteName: 'LogInPage',
+    initialRouteName: 'GameScreen',
   }
 );
 

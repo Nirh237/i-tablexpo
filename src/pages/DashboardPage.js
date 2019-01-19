@@ -84,6 +84,7 @@ class DashboardPage extends Component {
   }
 
   closeModal = (closeModalName) => {
+    debugger;
     if(closeModalName === 'CreateGame'){
     if (this.props.isTableIdValid) {
       this.setState(() => ({
@@ -101,9 +102,11 @@ class DashboardPage extends Component {
           duration: 8000
         });
       }
-    }else{
-      joinGamemodalVisible: false;
-    }
+    }else{ this.setState(() => ({
+      joinGamemodalVisible: false
+    }));
+  }
+    
   }
 
 

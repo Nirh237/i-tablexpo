@@ -169,12 +169,33 @@ public class WebService : System.Web.Services.WebService
     //}
 
     [WebMethod]
-    public string CreateNewGame(int playersCount, int gameType, int chipCount, int bigBlind, int smallBlind, int blindTime, int userId)
+    public string CreateNewGame(int playersCount, int gameType, int chipCount, IEnumerable<string> chipTypes, IEnumerable<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userId)
     {
-        string res = BAL.CreateNewGame(playersCount, gameType, chipCount, bigBlind, smallBlind, blindTime, userId);
+        string res = BAL.CreateNewGame(playersCount, gameType, chipCount, chipTypes, chipValues, bigBlind, smallBlind, blindTime, userId);
         return new JavaScriptSerializer().Serialize(res);
     }
 
+    [WebMethod]
+    public string AddPlayerToGame(int gameId,int userId)
+    {
 
+        string res = BAL.AddPlayerToGame(gameId, userId);
+
+        return new JavaScriptSerializer().Serialize(res);
+    }
+
+    [WebMethod]
+    public string CheckTableId(int tableId,int userId)
+    {
+        string res = BAL.CheckTableId(tableId, userId);
+
+        return new JavaScriptSerializer().Serialize(res);
+    }
+
+    [WebMethod]
+    public void Test(int tableId, IEnumerable<int> li)
+    {
+        var tst = li;
+    }
 
 }

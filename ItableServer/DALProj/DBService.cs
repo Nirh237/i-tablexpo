@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 
 namespace DALProj
 {
@@ -106,7 +107,61 @@ namespace DALProj
             }
         }
 
-        public static string ImgUpload(string base64ImgName, int userId)
+        public static string CheckTableId(int tableId, int userId)
+        {
+            try
+            {
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand();
+                _com.Parameters.Add("@TableId", SqlDbType.Int).Value = tableId;
+                _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
+                _com.Connection = _con;
+
+                _com.CommandText = $"SELECT Table_id FROM [TableIds] WHERE Table_id=@TableId";
+                var result = Convert.ToInt32(_com.ExecuteScalar());
+
+                if (result != 0 )
+                {
+                    _com.CommandText = $"SELECT Uu_id FROM [TableIds] WHERE Table_id=@TableId";
+                    var userIdResult = Convert.ToInt32(_com.ExecuteScalar());
+
+                    if (userIdResult == 0)
+                    {
+                        _com.CommandText = $"UPDATE TableIds SET Uu_id=@UserID  WHERE Table_id=@TableId";
+                        if(_com.ExecuteNonQuery() != 0 )
+                        return "ok";
+
+                        return null;
+                    }else
+                    {
+                        _com.CommandText = $"SELECT COUNT(1) FROM [TableIds] WHERE Table_id=@TableId AND Uu_id=@UserID";
+                        var validateParam = Convert.ToInt32(_com.ExecuteScalar());
+
+                        if(validateParam != 0)
+                        {
+                            return "ok";
+                        }
+
+                        return null;
+                    }
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            { 
+                    _con.Close();
+            }
+            return "ok";
+        }
+
+            public static string ImgUpload(string base64ImgName, int userId)
         {
             _con = new SqlConnection(ConStr);
             _con.Open();
@@ -157,6 +212,8 @@ namespace DALProj
             }
         }
 
+
+
         public static DataTable GetNotificationKeys(string email)
         {
             try
@@ -181,12 +238,11 @@ namespace DALProj
                 if (_con != null && _con.State == ConnectionState.Open)
                     _con.Close();
             }
-
             return null;
-
         }
 
-        public static int CreateNewGame(int playersCount, int gameType, int chipCount, int bigBlind, int smallBlind, int blindTime, int userId)
+
+        public static int CreateNewGame(int playersCount, int gameType, int chipCount, IEnumerable<string> chipTypes, IEnumerable<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userId)
         {
             var gameId = -1;
             _con = new SqlConnection(ConStr);
@@ -222,32 +278,78 @@ namespace DALProj
                 _con.Close();
             }
 
-            AddChipsForPlayer(gameId, userId);
+            AddChipsForPlayer(gameId, userId,true);
+            UpdateChipState(chipTypes, chipValues, gameId);
 
             return gameId;
         }
 
-        public static void AddChipsForPlayer(int gameId, int userID)
+        public static string AddChipsForPlayer(int gameId, int userID,bool isFirst = false)
         {
-            _con = new SqlConnection(ConStr);
-            _con.Open();
-            _com = new SqlCommand($"INSERT INTO [Chips_for_game_per_player](,gameId,Pot_count,P1,P2,P3,Player_id1,A1,A2,A3) VALUES(@GameID,0,0,0,0@UserID,0,0,0); SELECT SCOPE_IDENTITY()", _con);
+          
+            try
+            {
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand();
+                _com.Parameters.Add("@GameID", SqlDbType.Int).Value = gameId;
+                _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+                _com.Connection = _con;
 
-            _com.Parameters.Add("@GameID", SqlDbType.Int).Value = gameId;
-            _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+                if (isFirst)
+                {
+                    _com.CommandText = $"INSERT INTO Chips_for_game_per_player(Game_id,Pot_count,P1,P2,P3,Player_id1,A1,A2,A3,Player_id2,B1,B2,B3,Player_id3,C1,C2,C3) VALUES(@GameID,0,0,0,0,@UserID,0,0,0,0,0,0,0,0,0,0,0)";
+                    var result = _com.ExecuteNonQuery();
+                    return result == 1 ? "ok" : null;
+                }
+                else
+                {
+                    _com.CommandText = $"SELECT Player_id3 FROM Chips_for_game_per_player WHERE Game_id = @GameID";
+                    var playerId3Res = Convert.ToInt32(_com.ExecuteScalar());
+                    if (playerId3Res != 0)
+                        return null;
 
-            _con.Close();
+                    _com.CommandText = $"SELECT Player_id2 FROM Chips_for_game_per_player WHERE Game_id = @GameID";
+                    var playerId2Res = Convert.ToInt32(_com.ExecuteScalar());
+                    if (playerId2Res == 0)
+                    {
+                        _com.CommandText = $"UPDATE  Chips_for_game_per_player SET Player_id2=@UserID WHERE Game_id = @GameID";
+                        var result = _com.ExecuteNonQuery();
+                        return result == 1 ? "ok" : null;
+                    }
+                    else
+                    {
+                        _com.CommandText = $"UPDATE  Chips_for_game_per_player SET Player_id3=@UserID WHERE Game_id = @GameID";
+                        var result = _com.ExecuteNonQuery();
+                        return result == 1 ? "ok" : null;
+                    }
+                }
+   
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+            finally
+            {
+                _con.Close();
+            }
+
+            return "ok";
 
         }
 
-        private static void UpdateChipState(IReadOnlyList<int> chipType, IReadOnlyList<int> chipValues, int gameId)
+        private static void UpdateChipState(IEnumerable<string> chipTypes, IEnumerable<int> chipValues, int gameId)
         {
-            for (int i = 0; i < chipValues.Count; i++)
+            var chipTypesArry = chipTypes.ToArray();
+            var chipValuesArry = chipValues.ToArray();
+            for (int i = 0; i < chipTypesArry.Length; i++)
             {
                 using (_con = new SqlConnection(ConStr))
                 {
                     _con.Open();
-                    using (var com = new SqlCommand($"INSERT INTO [Chip_type]([Chip_value], [Chipe_color],[Game_id]) VALUES({chipType[i]},{chipValues[i]},{gameId}) ", _con))
+                    using (var com = new SqlCommand($"INSERT INTO [Chip_type]([Chip_value],[Chipe_color],[Game_id]) VALUES({chipValuesArry[i]},'{chipTypesArry[i]}',{gameId}) ", _con))
                     {
                         com.ExecuteNonQuery();
                     }

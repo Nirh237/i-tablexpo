@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Modal, TouchableHighlight, View, Alert, TouchableOpacity } from 'react-native';
 import {
   Container,
@@ -15,9 +16,10 @@ import {
   H1,
   Form
 } from 'native-base';
+import {startJoinGame} from '../actions/game';
 import LogoTitle from '../components/LogoHeader';
 
-export default class JoinGameModal extends Component {
+class JoinGameModal extends Component {
   static navigationOptions = {
     title: 'Dash',
     headerRight: (
@@ -39,7 +41,7 @@ export default class JoinGameModal extends Component {
   }
   state = {
     modalVisible: false,
-    gameid: ""
+    gameId: ""
   };
 
   setModalVisible(visible) {
@@ -51,6 +53,11 @@ export default class JoinGameModal extends Component {
     this.setState(() => ({ gameid: e.target.value }));
   }
 
+  handleButtonClick = async (gameId) => {
+    await this.props.startJoinGame(gameId,this.props.userDetails.ID);
+    this.props.closeModal('JoinGameModal');
+}
+
   render() {
     return (
       <Modal
@@ -61,16 +68,16 @@ export default class JoinGameModal extends Component {
         {this.props.closeModal}
       >
         <Form style={styles.form}>
-          <Text style={{ color: 'black', fontSize: 25, margin: 10 }}>ENTER YOUR GAME ID:</Text>
+          <Text style={{ color: 'white', fontSize: 25, margin: 10 }}>ENTER YOUR GAME ID:</Text>
           <Input
             type="text"
             autoFocus
             style={styles.input}
-            onChangeText={(tableid) => this.setState({ tableid })}
+            onChangeText={(gameId) => this.setState({ gameId })}
             value={this.state.tableid} />
 
           <Button full style={{ margin: 10, backgroundColor: 'black' }} onPress={() => {
-            this.props.closeModal('JoinGameModal');
+            this.handleButtonClick(this.state.gameId);
           }}>
             <Text>JOIN</Text>
           </Button>
@@ -80,27 +87,38 @@ export default class JoinGameModal extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout()),
+  startJoinGame: (gameId,userId) => dispatch(startJoinGame(gameId,userId)),
+
+});
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: !!state.auth.msg,
+  errorMassege: state.auth.msg,
+  userDetails: state.auth
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(JoinGameModal);
+
 const styles = {
   form: {
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: "column",
-    marginTop: 250,
-    marginBottom: 220,
-    backgroundColor: '#0279fe',
-    borderColor: 'black',
-    borderStyle: 'solid',
-    borderWidth: 5,
-    borderRadius: 10
-
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: "column",
+      marginTop: 250,
+      marginBottom: 220,
+      backgroundColor: '#364051',
+      borderWidth: 0,
+      borderRadius: 12
   },
 
   input: {
-    backgroundColor: 'white',
-    height: 50,
-    width: 300,
-    borderColor: 'gray',
-    borderWidth: 1,
-    margin: 10,
+      backgroundColor: 'white',
+      height: 30,
+      width: 300,
+      borderColor: 'gray',
+      borderWidth: 1,
+      margin: 10,
   }
 };
