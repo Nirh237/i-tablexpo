@@ -1,4 +1,5 @@
 ﻿using BALProj;
+using DALProj;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -35,6 +36,7 @@ public class WebService : System.Web.Services.WebService
         return "Hello World";
     }
 
+    //return User Id
     [WebMethod]
     public string Register(string userName, string fName, string lName, string age, string telephone, string password, string email)
     {
@@ -47,6 +49,7 @@ public class WebService : System.Web.Services.WebService
 
     }
 
+    //Return User Obj or Null
     [WebMethod]
     public string Login(string userName, string password)
     {
@@ -62,6 +65,7 @@ public class WebService : System.Web.Services.WebService
 
     }
 
+    //Return ok
     [WebMethod]
     public string ImgUpload(string base64img, string base64imgName, string userID)
     {
@@ -152,22 +156,7 @@ public class WebService : System.Web.Services.WebService
         BAL.AddNotification(email, Token);
     }
 
-    [Serializable]
-    public class TestParams
-    {
-        public List<int> chipType { get; set; }
-        public List<int> chipValues { get; set; }
-    }
-
-    //[WebMethod]
-    //public string CreateNewGame(int playersCount, int gameType, int chipCount, int chipType, int chipValues, int bigBlind, int smallBlind, int blindTime)
-    //{
-
-
-    //   string res = BAL.CreateNewGame(playersCount, gameType, chipCount, chipType, chipValues, bigBlind, smallBlind, blindTime);
-    //    return new JavaScriptSerializer().Serialize(res);
-    //}
-
+    //Return Game Id
     [WebMethod]
     public string CreateNewGame(int playersCount, int gameType, int chipCount, IEnumerable<string> chipTypes, IEnumerable<int> chipValues, int bigBlind, int smallBlind, int blindTime, int userId)
     {
@@ -175,6 +164,7 @@ public class WebService : System.Web.Services.WebService
         return new JavaScriptSerializer().Serialize(res);
     }
 
+    //Return "ok" or Null
     [WebMethod]
     public string AddPlayerToGame(int gameId,int userId)
     {
@@ -184,6 +174,7 @@ public class WebService : System.Web.Services.WebService
         return new JavaScriptSerializer().Serialize(res);
     }
 
+    //Return "ok" or Null
     [WebMethod]
     public string CheckTableId(int tableId,int userId)
     {
@@ -192,10 +183,39 @@ public class WebService : System.Web.Services.WebService
         return new JavaScriptSerializer().Serialize(res);
     }
 
+
     [WebMethod]
-    public void Test(int tableId, IEnumerable<int> li)
+    public string GetGameData(int gameId)
     {
-        var tst = li;
+        
+        var u = BAL.GetGameData(gameId);
+
+        string output = new JavaScriptSerializer().Serialize(u);
+        return output;
     }
+
+    [WebMethod]
+    public string UpdateGameData(int gameId, int p1g, int p2g, int p3g, int a1g, int a2g, int a3g, int b1g, int b2g, int b3g, int c1g, int c2g, int c3g)
+    {
+        var res = BAL.UpdateGameData(gameId, p1g, p2g, p3g, a1g, a2g, a3g, b1g, b2g, b3g, c1g, c2g, c3g);
+
+        return new JavaScriptSerializer().Serialize(res);
+    }
+
+    
+    [WebMethod]
+    public string EndGame(int gameId)
+    {
+       
+        GameStatus endGameData =  BAL.GetGameData(gameId);
+
+        
+        
+        string res = BAL.EndGame(gameId,  endGameData);
+
+        return new JavaScriptSerializer().Serialize(res);
+    }
+
+
 
 }

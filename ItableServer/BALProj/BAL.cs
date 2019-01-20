@@ -91,15 +91,55 @@ namespace BALProj
 
         public static string AddPlayerToGame(int gameId, int userId)
         {
-           string res = DBService.AddChipsForPlayer(gameId, userId);
+            string res = DBService.AddChipsForPlayer(gameId, userId);
 
             return res;
-            
+
         }
 
         public static string CheckTableId(int tableId, int userId)
         {
             string res = DBService.CheckTableId(tableId, userId);
+
+            return res;
+        }
+
+        public static GameStatus GetGameData(int gameId)
+        {
+            var u = DBService.GetGameData(gameId);
+            if (u == null) return null;
+            //insterd default values to vars
+            var startGame = new StartGame((int)u.Rows[0]["Game_id"], (int)u.Rows[0]["Pot_count"], (int)u.Rows[0]["P1"],
+                                (int)u.Rows[0]["P2"], (int)u.Rows[0]["P3"], (int)u.Rows[0]["Player_id1"],
+                               (int)u.Rows[0]["A1"], (int)u.Rows[0]["A2"], (int)u.Rows[0]["A3"],
+                                (int)u.Rows[0]["Player_id2"],
+                               (int)u.Rows[0]["B1"], (int)u.Rows[0]["B2"], (int)u.Rows[0]["B3"],
+                               (int)u.Rows[0]["Player_id3"],
+                               (int)u.Rows[0]["C1"], (int)u.Rows[0]["C2"], (int)u.Rows[0]["C3"],u.Rows[0]["Player1Name"].ToString(),
+                               u.Rows[0]["Player2Name"].ToString(), u.Rows[0]["Player3Name"].ToString(), u.Rows[0]["Player1Pic"].ToString(),
+                               u.Rows[0]["Player2Pic"].ToString(), u.Rows[0]["Player3Pic"].ToString());
+
+            var gameStats = GameStatus.ToGameStats(startGame.PotCount, startGame.P1, startGame.P2, startGame.P3,
+                                                  startGame.PlayerId1, startGame.A1, startGame.A2, startGame.A3,
+                                                  startGame.PlayerId2, startGame.B1, startGame.B2, startGame.B3,
+                                                  startGame.PlayerId3, startGame.C1, startGame.C2, startGame.C3,
+                                                  startGame.Player1Name,startGame.Player2Name,startGame.Player3Name,
+                                                  startGame.Player1Pic,startGame.Player2Pic,startGame.Player3Pic);
+
+            return gameStats;
+        }
+
+        public static string EndGame(int gameId, GameStatus endGameData)
+        {
+            
+            string res = DBService.EndGame(gameId, endGameData);
+
+            return res;
+        }
+
+        public static object UpdateGameData(int gameId, int p1g, int p2g, int p3g, int a1g, int a2g, int a3g, int b1g, int b2g, int b3g, int c1g, int c2g, int c3g)
+        {
+            var res = DBService.UpdateGameData(gameId, p1g, p2g, p3g, a1g, a2g, a3g, b1g, b2g, b3g, c1g, c2g, c3g);
 
             return res;
         }

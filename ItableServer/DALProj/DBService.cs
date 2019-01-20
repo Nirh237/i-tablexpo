@@ -1,9 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+
 
 namespace DALProj
 {
@@ -158,10 +160,150 @@ namespace DALProj
             { 
                     _con.Close();
             }
-            return "ok";
+            return null;
         }
 
-            public static string ImgUpload(string base64ImgName, int userId)
+        public static string UpdateGameData(int gameId, int p1g, int p2g, int p3g, int a1g, int a2g, int a3g, int b1g, int b2g, int b3g, int c1g, int c2g, int c3g)
+        {
+            try
+            {
+                var res = "";
+                int chipWhight = 100;
+                List<int> chipValues=new List<int>(3);
+                List<string> chipColors = new List<string>(3);
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand();
+                _com.Connection = _con;
+
+                _com.CommandText = $"SELECT * FROM [Chip_type] WHERE [Game_id]={gameId}";
+                SqlDataReader rdr =_com.ExecuteReader();
+
+                while(rdr.Read())
+                {
+                    chipValues.Add(Convert.ToInt32(rdr["Chip_value"]));
+                    chipColors.Add(rdr["Chipe_color"].ToString());
+                }
+
+                var list = new List<KeyValuePair<string, int>>();
+                list.Add(new KeyValuePair<string, int>("P1", p1g/chipWhight* chipValues[0]));
+                list.Add(new KeyValuePair<string, int>("P2", p2g / chipWhight * chipValues[1]));
+                list.Add(new KeyValuePair<string, int>("P3", p3g / chipWhight * chipValues[2]));
+                list.Add(new KeyValuePair<string, int>("A1", a1g / chipWhight * chipValues[0]));
+                list.Add(new KeyValuePair<string, int>("A2", a2g / chipWhight * chipValues[1]));
+                list.Add(new KeyValuePair<string, int>("A3", a3g / chipWhight * chipValues[2]));
+                list.Add(new KeyValuePair<string, int>("B1", b1g / chipWhight * chipValues[0]));
+                list.Add(new KeyValuePair<string, int>("B2", b2g / chipWhight * chipValues[1]));
+                list.Add(new KeyValuePair<string, int>("B3", b3g / chipWhight * chipValues[2]));
+                list.Add(new KeyValuePair<string, int>("C1", c1g / chipWhight * chipValues[0]));
+                list.Add(new KeyValuePair<string, int>("C2", c2g / chipWhight * chipValues[1]));
+                list.Add(new KeyValuePair<string, int>("C3", c3g / chipWhight * chipValues[2]));
+
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand();
+                _com.Connection = _con;
+
+
+                _com.CommandText = $"UPDATE Chips_for_game_per_player SET P1={list[0].Value},P2={list[1].Value},P3={list[2].Value},A1={list[3].Value},A2={list[4].Value},A3={list[5].Value}" +
+                                   $",B1={list[6].Value},B2={list[7].Value},B3={list[8].Value},C1={list[9].Value},C2={list[10].Value},C3={list[11].Value} WHERE Game_id = {gameId}";
+                res = _com.ExecuteNonQuery().ToString();
+
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                _con.Close();
+            }
+            return "ok";
+           
+        }
+
+        public static string EndGame(int gameId, GameStatus endGameData)
+        {
+
+           
+            try
+            {
+                var result = -1;
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand();
+                _com.Connection = _con;
+
+                if (endGameData.PlayerId1 != 0)
+                {
+                    _com.CommandText = $"INSERT INTO [Player_game]([Game_id],[Rank],[Chip_amount],[Turn_time],[Uu_id]) VALUES({gameId},0,{endGameData.Player1Total},0,{endGameData.PlayerId1}) ";
+                    result = _com.ExecuteNonQuery();
+                }
+
+                if (endGameData.PlayerId2 != 0)
+                {
+                    _com.CommandText = $"INSERT INTO [Player_game]([Game_id],[Rank],[Chip_amount],[Turn_time],[Uu_id]) VALUES({gameId},0,{endGameData.Player2Total},0,{endGameData.PlayerId2}) ";
+                    result = _com.ExecuteNonQuery();
+                }
+
+                if (endGameData.PlayerId3 != 0)
+                {
+                    _com.CommandText = $"INSERT INTO [Player_game]([Game_id],[Rank],[Chip_amount],[Turn_time],[Uu_id]) VALUES({gameId},0,{endGameData.Player3Total},0,{endGameData.PlayerId3}) ";
+                    result = _com.ExecuteNonQuery();
+                }
+
+                if (result == 1)
+                {
+                    return "ok";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                _con.Close();
+            }
+
+            return null;
+
+        }
+
+        public static DataTable GetGameData(int gameId)
+        {
+            //string res = "";
+            //_con = new SqlConnection(ConStr);
+            //_con.Open();
+            //_com = new SqlCommand($"SELECT * FROM Chips_for_game_per_player WHERE Game_id={gameId}", _con);
+            //SqlDataReader reader = _com.ExecuteReader();
+            //while(reader.Read())
+            //{
+            //    res = reader[0].ToString();
+            //}
+            //_con.Close();
+
+            //return res;
+
+            _con = new SqlConnection(ConStr);
+            var adtr =
+                new SqlDataAdapter($"SELECT * FROM Chips_for_game_per_player WHERE Game_id={gameId}", _con);
+
+            var ds = new DataSet();
+            adtr.Fill(ds, "StartGame");
+
+            return ds.Tables["StartGame"].Rows.Count != 0 ? ds.Tables["StartGame"] : null;
+
+
+        }
+
+        public static string ImgUpload(string base64ImgName, int userId)
         {
             _con = new SqlConnection(ConStr);
             _con.Open();
@@ -286,9 +428,26 @@ namespace DALProj
 
         public static string AddChipsForPlayer(int gameId, int userID,bool isFirst = false)
         {
-          
+            string userName="";
+            string userPic="";
+
             try
             {
+                _con = new SqlConnection(ConStr);
+                _con.Open();
+                _com = new SqlCommand();
+                _com.Connection = _con;
+
+                _com.CommandText = $"SELECT * FROM Players WHERE Uu_id = {userID}";
+                _rdr = _com.ExecuteReader();
+                if (_rdr.Read())
+                {
+                    userName = _rdr["User_name"].ToString();
+                    userPic = _rdr["PictureName"].ToString();
+                }
+
+                _con.Close();
+
                 _con = new SqlConnection(ConStr);
                 _con.Open();
                 _com = new SqlCommand();
@@ -296,9 +455,11 @@ namespace DALProj
                 _com.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
                 _com.Connection = _con;
 
+               
+
                 if (isFirst)
                 {
-                    _com.CommandText = $"INSERT INTO Chips_for_game_per_player(Game_id,Pot_count,P1,P2,P3,Player_id1,A1,A2,A3,Player_id2,B1,B2,B3,Player_id3,C1,C2,C3) VALUES(@GameID,0,0,0,0,@UserID,0,0,0,0,0,0,0,0,0,0,0)";
+                    _com.CommandText = $"INSERT INTO Chips_for_game_per_player(Game_id,Pot_count,P1,P2,P3,Player_id1,A1,A2,A3,Player_id2,B1,B2,B3,Player_id3,C1,C2,C3,Player1Name,Player2Name,Player3Name,Player1Pic,Player2Pic,Player3Pic) VALUES(@GameID,0,0,0,0,@UserID,0,0,0,0,0,0,0,0,0,0,0,'{userName}',' ',' ','{userPic}',' ',' ')";
                     var result = _com.ExecuteNonQuery();
                     return result == 1 ? "ok" : null;
                 }
@@ -313,13 +474,13 @@ namespace DALProj
                     var playerId2Res = Convert.ToInt32(_com.ExecuteScalar());
                     if (playerId2Res == 0)
                     {
-                        _com.CommandText = $"UPDATE  Chips_for_game_per_player SET Player_id2=@UserID WHERE Game_id = @GameID";
+                        _com.CommandText = $"UPDATE  Chips_for_game_per_player SET Player_id2=@UserID,Player2Name='{userName}',Player2Pic='{userPic}' WHERE Game_id = @GameID";
                         var result = _com.ExecuteNonQuery();
                         return result == 1 ? "ok" : null;
                     }
                     else
                     {
-                        _com.CommandText = $"UPDATE  Chips_for_game_per_player SET Player_id3=@UserID WHERE Game_id = @GameID";
+                        _com.CommandText = $"UPDATE  Chips_for_game_per_player SET Player_id3=@UserID,Player3Name='{userName}',Player3Pic='{userPic}' WHERE Game_id = @GameID";
                         var result = _com.ExecuteNonQuery();
                         return result == 1 ? "ok" : null;
                     }

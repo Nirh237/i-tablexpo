@@ -15,6 +15,7 @@ import {
     Body,
     Label,
     H1,
+    Toast
 } from 'native-base';
 import LogoTitle from '../components/LogoHeader';
 import {startCreateNewGame} from '../actions/game';
@@ -52,13 +53,23 @@ class CreateNewGamePage extends Component {
     }
 
     onSubmit = async () => {
-        debugger;
+       debugger;
         const chipTypes = ["blue","red","green"];
         const chipValues = [100,200,300];
        await this.props.startCreateNewGame(this.state.playersCount,
             this.state.gameType,this.state.totalChipsCount,chipTypes,chipValues,
             this.state.bigBlind,this.state.smallBlind,
             this.state.blindTime,this.props.User.ID);
+
+            if(this.props.gameId != 0)
+            {
+                Toast.show({
+                    text: "Your Game ID is: "+this.props.gameId,
+                    buttonText: "Okay",
+                    type: "danger",
+                    duration: 8000
+                  });
+            }
     }
 
 
@@ -155,6 +166,7 @@ const mapDispatchToProps = (dispatch) => ({
   const mapStateToProps = (state) => ({
     errorMassege: state.auth.msg,
     User:state.auth,
+    gameId: state.game.NewGameId,
     
   });
   
