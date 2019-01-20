@@ -17,15 +17,16 @@ import {
 } from 'native-base';
 import {View} from 'react-native';
 import Expo from "expo";
-import {Modal, StatusBar, TouchableOpacity, Image, ImageBackground} from "react-native";
-import Orientation from 'react-native-orientation';
+import {Modal, StatusBar, TouchableOpacity, Image, ImageBackground,DeviceInfo, Platform} from "react-native";
+
 
 export default class GameScreen extends Component {
     // ...
     static navigationOptions = {
         title: 'Game',
         headerStyle: {
-            backgroundColor: '#364051'
+            backgroundColor: '#364051',
+            height: Platform.OS === 'ios' ? 30 : 25,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -99,7 +100,7 @@ export default class GameScreen extends Component {
                     width: '100%',
                     height: '100%'
                 }}>
-                    <Content padder>
+                    <Content scrollEnabled={false}>
                         <View style={{
                             display: 'flex',
                             flexDirection: 'column',

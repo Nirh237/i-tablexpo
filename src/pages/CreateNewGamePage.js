@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Modal, TouchableHighlight, View, Alert, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
     Container,
     Header,
@@ -14,7 +14,8 @@ import {
     center,
     Body,
     Label,
-    H1
+    H1,
+    Toast
 } from 'native-base';
 import LogoTitle from '../components/LogoHeader';
 import {startCreateNewGame} from '../actions/game';
@@ -51,12 +52,22 @@ class CreateNewGamePage extends Component {
     }
 
     onSubmit = async() => {
-        debugger;
+       debugger;
         const chipTypes = ["blue", "red", "green"];
         const chipValues = [100, 200, 300];
         await this
             .props
             .startCreateNewGame(this.state.playersCount, this.state.gameType, this.state.totalChipsCount, chipTypes, chipValues, this.state.bigBlind, this.state.smallBlind, this.state.blindTime, this.props.User.ID);
+
+            if(this.props.gameId != 0)
+            {
+                Toast.show({
+                    text: "Your Game ID is: "+this.props.gameId,
+                    buttonText: "Okay",
+                    type: "danger",
+                    duration: 8000
+                  });
+            }
     }
 
     render() {
@@ -146,7 +157,9 @@ const mapDispatchToProps = (dispatch) => ({
     startCreateNewGame: (playersCount, gameType, chipCount, chipTypes, chipValues, bigBlind, smallBlind, blindTime, userId) => dispatch(startCreateNewGame(playersCount, gameType, chipCount, chipTypes, chipValues, bigBlind, smallBlind, blindTime, userId))
 });
 
-const mapStateToProps = (state) => ({errorMassege: state.auth.msg, User: state.auth});
+const mapStateToProps = (state) => ({errorMassege: state.auth.msg,
+     User: state.auth,
+    gameId: state.game.NewGameId,})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewGamePage);
 
