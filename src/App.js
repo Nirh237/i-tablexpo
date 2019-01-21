@@ -57,7 +57,7 @@ export const AppNavigator = createStackNavigator(
 
   },
   {
-    initialRouteName: 'LogInPage',
+    initialRouteName: 'CreateNewGame',
   }
 );
 

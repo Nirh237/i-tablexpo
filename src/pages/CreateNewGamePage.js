@@ -15,11 +15,15 @@ import {
     Body,
     Label,
     H1,
-    Toast
+    Toast,
+    Picker
 } from 'native-base';
 import LogoTitle from '../components/LogoHeader';
 import {startCreateNewGame} from '../actions/game';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import MultiSelect from 'react-native-multiple-select';
+
+
 class CreateNewGamePage extends Component {
     static navigationOptions = {
         title: 'CREATE NEW GAME',
@@ -32,6 +36,7 @@ class CreateNewGamePage extends Component {
             fontWeight: 'bold'
         }
     };
+
     constructor(props) {
         super(props);
 
@@ -42,9 +47,72 @@ class CreateNewGamePage extends Component {
             totalChipsCount: "",
             bigBlind: "",
             smallBlind: "",
-            blindTime: ""
+            blindTime: "",
+            loading: true,
+            selected: "",
+            chipTypesSelectedItems: [],
+            chipValuesSelectedItems: [],
+            typeItems:[{
+            id: 'Blue',
+            name: 'Blue',
+          }, {
+            id: 'Red',
+            name: 'Red',
+          }, {
+            id: 'Green',
+            name: 'Green',
+          }, {
+            id: 'Black',
+            name: 'Black',
+          }, {
+            id: 'Yellow',
+            name: 'Yellow',
+          }, {
+            id: 'White',
+            name: 'White',
+          }],
+          valuesItems:[{
+            id: '10',
+            name: 10,
+          }, {
+            id: '20',
+            name: 20,
+          }, {
+            id: '30',
+            name: 30,
+          }, {
+            id: '40',
+            name: 40,
+          }, {
+            id: '50',
+            name: 50,
+          }, {
+            id: '60',
+            name: 60,
+          }]
         };
+
     }
+    async componentWillMount() {
+        await Expo
+          .Font
+          .loadAsync({ 'Roboto': require('native-base/Fonts/Roboto.ttf'), 'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'), 'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf') });
+        this.setState({ loading: false });
+      }
+
+      onSelectedItemsChange = chipTypesSelectedItems => {
+        this.setState({ chipTypesSelectedItems });
+      };
+
+      onSelectedValuesItemsChange = chipValuesSelectedItems => {
+        this.setState({ chipValuesSelectedItems });
+      };
+
+      onValueChange(value: string) {
+        this.setState({
+            playersCount: value
+        });
+      }
 
     handleGameIdChange = (e) => {
 
@@ -57,7 +125,7 @@ class CreateNewGamePage extends Component {
         const chipValues = [100, 200, 300];
         await this
             .props
-            .startCreateNewGame(this.state.playersCount, this.state.gameType, this.state.totalChipsCount, chipTypes, chipValues, this.state.bigBlind, this.state.smallBlind, this.state.blindTime, this.props.User.ID);
+            .startCreateNewGame(this.state.playersCount, this.state.gameType, this.state.totalChipsCount, this.state.chipTypesSelectedItems, this.state.chipValuesSelectedItems, this.state.bigBlind, this.state.smallBlind, this.state.blindTime, this.props.User.ID);
 
             if(this.props.gameId != 0)
             {
@@ -71,19 +139,35 @@ class CreateNewGamePage extends Component {
     }
 
     render() {
+        if (this.state.loading) {
+            return <Expo.AppLoading />;
+          }
         return (
             <Container>
                 <Content>
                     <Form>
 
-                        <Item>
-                            <Input
-                                type="text"
-                                placeholder="Players Count"
-                                autoFocus
-                                onChangeText={(playersCount) => this.setState({playersCount})}
-                                value={this.state.playersCount}/>
-                        </Item>
+                <Item>
+                    <Picker
+                    note
+                    mode="dropdown"
+                    style={{ width: '100%' }}
+                    placeholder="Select number of players"
+                    placeholderStyle={{color:'black'}}
+                    selectedValue={this.state.playersCount}
+                    onValueChange={this.onValueChange.bind(this)}
+                  >
+                    <Picker.Item label="1" value="1" />
+                    <Picker.Item label="2" value="2" />
+                    <Picker.Item label="3" value="3" />
+                    <Picker.Item label="4" value="4" />
+                    <Picker.Item label="5" value="5" />
+                    <Picker.Item label="6" value="6" />
+                    <Picker.Item label="7" value="7" />
+                    <Picker.Item label="8" value="8" />
+                    <Picker.Item label="9" value="9" />
+                  </Picker>
+                  </Item>
 
                         <Item>
                             <Input
@@ -101,21 +185,49 @@ class CreateNewGamePage extends Component {
                                 value={this.state.totalChipsCount}/>
                         </Item>
 
-                        <Item>
-                            <Input
-                                type="text"
-                                placeholder="Chip Type"
-                                onChangeText={(note) => this.setState({note})}
-                                value={this.state.note}/>
-                        </Item>
+                        <MultiSelect
+                        hideTags
+                        items={this.state.typeItems}
+                        uniqueKey="id"
+                        ref={(component) => { this.multiSelect = component }}
+                        onSelectedItemsChange={this.onSelectedItemsChange}
+                        selectedItems={this.state.chipTypesSelectedItems}
+                        selectText="Select 3 chip colors"
+                        searchInputPlaceholderText="Search Items..."
+                        onChangeInput={ (text)=> console.log(text)}
+                        tagRemoveIconColor="#CCC"
+                        tagBorderColor="#CCC"
+                        tagTextColor="#CCC"
+                        selectedItemTextColor="#CCC"
+                        selectedItemIconColor="#CCC"
+                        itemTextColor="#000"
+                        displayKey="name"
+                        searchInputStyle={{ color: '#CCC' }}
+                        submitButtonColor="#CCC"
+                        submitButtonText="Ok"
+                      />
 
-                        <Item>
-                            <Input
-                                type="text"
-                                placeholder="Chip Value"
-                                onChangeText={(note) => this.setState({note})}
-                                value={this.state.note}/>
-                        </Item>
+                      <MultiSelect
+                      hideTags
+                      items={this.state.valuesItems}
+                      uniqueKey="id"
+                      ref={(component) => { this.multiSelect = component }}
+                      onSelectedItemsChange={this.onSelectedValuesItemsChange}
+                      selectedItems={this.state.chipValuesSelectedItems}
+                      selectText="Select 3 chip Values"
+                      searchInputPlaceholderText="Search Items..."
+                      onChangeInput={ (text)=> console.log(text)}
+                      tagRemoveIconColor="#CCC"
+                      tagBorderColor="#CCC"
+                      tagTextColor="#CCC"
+                      selectedItemTextColor="#CCC"
+                      selectedItemIconColor="#CCC"
+                      itemTextColor="#000"
+                      displayKey="name"
+                      searchInputStyle={{ color: '#CCC' }}
+                      submitButtonColor="#CCC"
+                      submitButtonText="Ok"
+                    />
 
                         <Item>
                             <Input
@@ -189,3 +301,25 @@ const styles = {
 // onValueChange={this.onValueChange2.bind(this)} >     <Picker.Item
 // label="CASH" value=0 />     <Picker.Item label="TOURNAMENT" value=1 />
 // </Picker>
+
+// <MultiSelect
+//                         hideTags
+//                         items={this.state.items}
+//                         uniqueKey="id"
+//                         ref={(component) => { this.multiSelect = component }}
+//                         onSelectedItemsChange={this.onSelectedItemsChange}
+//                         selectedItems={this.state.selectedItems}
+//                         selectText="Pick Items"
+//                         searchInputPlaceholderText="Search Items..."
+//                         onChangeInput={ (text)=> console.log(text)}
+//                         tagRemoveIconColor="#CCC"
+//                         tagBorderColor="#CCC"
+//                         tagTextColor="#CCC"
+//                         selectedItemTextColor="#CCC"
+//                         selectedItemIconColor="#CCC"
+//                         itemTextColor="#000"
+//                         displayKey="name"
+//                         searchInputStyle={{ color: '#CCC' }}
+//                         submitButtonColor="#CCC"
+//                         submitButtonText="Ok"
+//                       />
